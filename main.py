@@ -11,12 +11,12 @@ window.title("Music :3")
 icon_image = tkinter.PhotoImage(file="images/icon.png")
 window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
-
+font_color= "#cdd6f4"
+accent_color1= "#cba6f7"
 
 mixer.init()
 mainframe = Frame (
-height= 200,
-width= 300
+    bg= bg_color
 )
 mainframe.place(relx=0.5, rely=0.5, anchor=CENTER)
 def open_window():
@@ -25,7 +25,8 @@ def open_window():
     mixer.music.set_volume(0.3)
     
 def play():
-    mixer.music.play()
+    mixer.music.play(),
+    
 def pause():
     mixer.music.pause()
 small_button = tkinter.Button(
@@ -34,31 +35,44 @@ small_button = tkinter.Button(
     padx=0.5,         
     pady=2,             
     command=open_window,
+    bg= bg_color,
+    bd= 0,
+    highlightthickness=0,
+    fg= font_color,
+    activebackground= bg_color,
+    
+    activeforeground= accent_color1
     
 )
 
 small_button.pack(anchor=NW)
+playbutton= PhotoImage(file="images/pause.png")
+bigplaybutton= playbutton.zoom(3)
+pausebutton= PhotoImage(file="images/play.png")
+bigpausebutton= pausebutton.zoom(3)
 play_button = tkinter.Button(
     mainframe,
-    text="Play", 
-    font=("Arial", 10),  
+    image= bigplaybutton,
+    width=50, 
+    height=50,  
     padx=2,         
     pady=2,             
     command=play,
     
 )
-play_button.pack(side=LEFT, padx=2)
+play_button.pack(side=LEFT, padx=4)
 
 pause_button = tkinter.Button(
     mainframe,
-    text="Pause", 
-    font=("Arial", 10),  
+    image= bigpausebutton,
+    width=50, 
+    height=50,
     padx=2,         
     pady=2,             
     command=pause,
     
 )
-pause_button.pack(side=RIGHT, padx=2)
+pause_button.pack(side=RIGHT, padx=4)
 
 
 window.mainloop()
