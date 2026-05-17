@@ -18,6 +18,10 @@ mixer.init()
 mainframe = Frame (
     bg= bg_color
 )
+menuframe = Frame (
+    bg = bg_color
+)
+menuframe.place(relx=0.5,anchor=N)
 mainframe.place(relx=0.5, rely=0.5, anchor=CENTER)
 def open_window():
     filename = fd.askopenfilename()
@@ -30,6 +34,7 @@ def play():
 def pause():
     mixer.music.pause()
 small_button = tkinter.Button(
+    menuframe,
     text="Open File", 
     font=("Arial", 10),  
     padx=0.5,         
@@ -45,7 +50,36 @@ small_button = tkinter.Button(
     
 )
 
-small_button.pack(anchor=NW)
+small_button.pack(side= LEFT, padx=50)
+def open_settings():
+    
+    settings_win = tkinter.Toplevel(
+        bg= bg_color,
+    )
+    settings_win.title("Settings")
+    settings_win.geometry("250x150")
+    
+
+
+settings_button = tkinter.Button(
+    menuframe,
+    text="Settings", 
+    font=("Arial", 10),  
+    padx=0.5,         
+    pady=2,             
+    command=open_settings,
+    bg= bg_color,
+    bd= 0,
+    highlightthickness=0,
+    fg= font_color,
+    activebackground= bg_color,
+    
+    activeforeground= accent_color1
+    
+)
+
+settings_button.pack(side= RIGHT, padx=50)
+
 playbutton= PhotoImage(file="images/pause.png")
 bigplaybutton= playbutton.zoom(3)
 pausebutton= PhotoImage(file="images/play.png")
