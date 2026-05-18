@@ -51,6 +51,12 @@ small_button = tkinter.Button(
 )
 
 small_button.pack(side= LEFT, padx=50)
+current_saved_volume = 30
+def set_volume(val):
+    global current_saved_volume
+    current_saved_volume = int(val)
+    volume= float(val) / 100
+    mixer.music.set_volume(volume)
 def open_settings():
     
     settings_win = tkinter.Toplevel(
@@ -58,6 +64,13 @@ def open_settings():
     )
     settings_win.title("Settings")
     settings_win.geometry("250x150")
+    idk = tkinter.Label(settings_win, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk.pack(pady=10)
+    volume = Scale(settings_win, from_ = 0, to = 100, orient=HORIZONTAL, bg = bg_color,
+               command = set_volume, fg=font_color)
+    volume.pack(pady=15)
+    volume.set(current_saved_volume)
+    mixer.music.set_volume(0.3)
     
 
 
