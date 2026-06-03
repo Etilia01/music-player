@@ -13,6 +13,9 @@ window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
 font_color= "#cdd6f4"
 accent_color1= "#cba6f7"
+songlength= 0
+
+songname = "Nothing rn"
 
 mixer.init()
 mainframe = Frame (
@@ -23,13 +26,26 @@ menuframe = Frame (
 )
 menuframe.place(relx=0.5,anchor=N)
 mainframe.place(relx=0.5, rely=0.5, anchor=CENTER)
+lowerframe = Frame (
+    bg = bg_color
+)
+lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 def open_window():
+    global songname, songlength
     filename = fd.askopenfilename()
     mixer.music.load(filename)
     mixer.music.set_volume(0.3)
+    songname =os.path.basename(filename)
+    songlength= sound.get_length()
+    
+    
     
 def play():
+    global songname
     mixer.music.play(),
+    nowplaying.config(text = songname)
+    window.update() 
+
     
 def pause():
     mixer.music.pause()
@@ -92,7 +108,14 @@ settings_button = tkinter.Button(
 )
 
 settings_button.pack(side= RIGHT, padx=50)
+progress = tkinter.Scale (
+    mainframe,
 
+    length= 250,
+    orient= HORIZONTAL
+
+)
+progress.pack(anchor=N, pady=30)
 playbutton= PhotoImage(file="images/pause.png")
 bigplaybutton= playbutton.zoom(3)
 pausebutton= PhotoImage(file="images/play.png")
@@ -120,7 +143,8 @@ pause_button = tkinter.Button(
     
 )
 pause_button.pack(side=RIGHT, padx=4)
-
+nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
+nowplaying.pack(anchor=N)
 
 window.mainloop()
 
