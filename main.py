@@ -95,9 +95,10 @@ def open_settings():
     
     settings_win = tkinter.Toplevel(
         bg= bg_color,
+        
     )
     settings_win.title("Settings")
-    settings_win.geometry("250x150")
+    settings_win.geometry("250x400")
     idk = tkinter.Label(settings_win, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk.pack(pady=10)
     volume = Scale(settings_win, from_ = 0, to = 100, orient=HORIZONTAL, bg = bg_color,
@@ -105,7 +106,14 @@ def open_settings():
     volume.pack(pady=15)
     volume.set(current_saved_volume)
     mixer.music.set_volume(0.3)
-    
+    idk2 = tkinter.Label(settings_win, text="Backgroundcolor", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk2.pack(pady=10)
+    bgentry = tkinter.Entry(settings_win)
+    bgentry.pack(pady=15)
+    idk3 = tkinter.Label(settings_win, text="Fontcolor", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk3.pack(pady=10)
+    fontcolorentry = tkinter.Entry(settings_win)
+    fontcolorentry.pack(pady=15)
 
 
 settings_button = tkinter.Button(
