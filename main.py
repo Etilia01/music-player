@@ -14,8 +14,10 @@ window.configure(background = bg_color)
 font_color= "#cdd6f4"
 accent_color1= "#cba6f7"
 songlength= 0
-
+playlist = []
+paused = False
 songname = "Nothing rn"
+progress= 0 # to show position later if i have time to implement that
 
 mixer.init()
 mainframe = Frame (
@@ -39,18 +41,32 @@ def open_window():
     music= mixer.Sound(filename)
     songlength= music.get_length()
     print(songlength)
+    progressbar.config(to=songlength)
     
+def update_progress_bar():
+    global paused
+    if paused == False:
+        position = mixer.music.get_pos() / 1000
+        print (position) #
+        progressbar.set(position)
+        window.after(1000, update_progress_bar)
     
     
 def play():
-    global songname
-    mixer.music.play(),
-    nowplaying.config(text = songname)
-    window.update() 
-
+    global songname, paused
+    if paused == False :
+        mixer.music.play(),
+        nowplaying.config(text = songname)
+        window.update() 
+    else:
+        mixer.music.unpause()
+        paused = False
+    update_progress_bar()
     
 def pause():
+    global paused
     mixer.music.pause()
+    paused = True
 small_button = tkinter.Button(
     menuframe,
     text="Open File", 
@@ -110,14 +126,15 @@ settings_button = tkinter.Button(
 )
 
 settings_button.pack(side= RIGHT, padx=50)
-progress = tkinter.Scale (
+progressbar = tkinter.Scale (
     mainframe,
-
-    length= 250,
-    orient= HORIZONTAL
-
+    from_=0,
+    to= 100,
+    orient= HORIZONTAL,
+    showvalue=False,
+    length= 200
 )
-progress.pack(anchor=N, pady=30)
+progressbar.pack(anchor=N, pady=30)
 playbutton= PhotoImage(file="images/pause.png")
 bigplaybutton= playbutton.zoom(3)
 pausebutton= PhotoImage(file="images/play.png")
