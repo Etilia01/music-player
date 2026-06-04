@@ -36,7 +36,9 @@ def open_window():
     mixer.music.load(filename)
     mixer.music.set_volume(0.3)
     songname =os.path.basename(filename)
-    songlength= sound.get_length()
+    music= mixer.Sound(filename)
+    songlength= music.get_length()
+    print(songlength)
     
     
     
