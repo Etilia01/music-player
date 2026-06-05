@@ -18,7 +18,8 @@ playlist = []
 paused = False
 songname = "Nothing rn"
 progress= 0 # to show position later if i have time to implement that
-
+fontcolorset= tkinter.StringVar()
+bgcolorset = tkinter.StringVar()
 mixer.init()
 mainframe = Frame (
     bg= bg_color
@@ -91,6 +92,7 @@ def set_volume(val):
     current_saved_volume = int(val)
     volume= float(val) / 100
     mixer.music.set_volume(volume)
+
 def open_settings():
     
     settings_win = tkinter.Toplevel(
@@ -106,14 +108,36 @@ def open_settings():
     volume.pack(pady=15)
     volume.set(current_saved_volume)
     mixer.music.set_volume(0.3)
-    idk2 = tkinter.Label(settings_win, text="Backgroundcolor", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk2 = tkinter.Label(settings_win, text="Backgroundcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk2.pack(pady=10)
-    bgentry = tkinter.Entry(settings_win)
+    bgentry = tkinter.Entry(settings_win, textvariable=bgcolorset)
     bgentry.pack(pady=15)
-    idk3 = tkinter.Label(settings_win, text="Fontcolor", font=("Arial", 12), fg=font_color, bg= bg_color)
+    submit1 = tkinter.Button(
+    settings_win,
+    text="Update Settings",   
+    padx=0.5,         
+    pady=2,             
+    command=updatebgcolor,)
+    submit1.pack(pady=1)
+    idk3 = tkinter.Label(settings_win, text="Fontcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk3.pack(pady=10)
-    fontcolorentry = tkinter.Entry(settings_win)
+    fontcolorentry = tkinter.Entry(settings_win, textvariable=fontcolorset)
     fontcolorentry.pack(pady=15)
+    submit2 = tkinter.Button(
+    settings_win,
+    text="Update Settings",   
+    padx=0.5,         
+    pady=2,             
+    command=updatefontcolor)
+    submit2.pack(pady=1)
+def updatebgcolor():
+    global bg_color
+    bg_color = bgcolorset.get()
+    print(bg_color)
+def updatefontcolor():
+    global font_color
+    font_color = fontcolorset.get()
+    print(font_color)
 
 
 settings_button = tkinter.Button(
