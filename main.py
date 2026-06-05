@@ -134,10 +134,14 @@ def updatebgcolor():
     global bg_color
     bg_color = bgcolorset.get()
     print(bg_color)
+    window.configure(background=bg_color) 
+    
 def updatefontcolor():
     global font_color
     font_color = fontcolorset.get()
     print(font_color)
+    window.update() 
+    
 
 
 settings_button = tkinter.Button(
