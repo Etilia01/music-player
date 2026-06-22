@@ -5,14 +5,15 @@ from pygame import mixer
 import os
 
 bg_color = "#313244"
+font_color= "#cdd6f4"
+accent_color1= "#cba6f7"
 window = Tk()
 window.geometry("400x400")
 window.title("Music :3")
 icon_image = tkinter.PhotoImage(file="images/icon.png")
 window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
-font_color= "#cdd6f4"
-accent_color1= "#cba6f7"
+
 songlength= 0
 playlist = []
 paused = False
@@ -35,9 +36,11 @@ lowerframe = Frame (
 lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
 def initstuff():
+    global bg_color, font_color
     file = open("save.txt","r")
-    bg_color = file.read()
+    file_list = eval(file.read())
     file.close()
+    bg_color, font_color = file_list
     window.configure(background=bg_color) 
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
@@ -45,6 +48,9 @@ def initstuff():
     small_button.configure(background=bg_color)
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
+    nowplaying.configure(foreground=font_color)
+    small_button.configure(foreground=font_color)
+    settings_button.configure(foreground=font_color)
 
 def open_window():
     global songname, songlength
@@ -155,7 +161,7 @@ def updatebgcolor():
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
     file = open("save.txt","w")
-    file.write(bg_color)
+    file.write(str([bg_color,font_color]))
     file.close()
     
 def updatefontcolor():
@@ -167,6 +173,9 @@ def updatefontcolor():
     small_button.configure(foreground=font_color)
     
     settings_button.configure(foreground=font_color)
+    file = open("save.txt","w")
+    file.write(str([bg_color,font_color]))
+    file.close()
     
 
 
