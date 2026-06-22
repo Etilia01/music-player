@@ -33,6 +33,19 @@ lowerframe = Frame (
     bg = bg_color
 )
 lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
+
+def initstuff():
+    file = open("save.txt","r")
+    bg_color = file.read()
+    file.close()
+    window.configure(background=bg_color) 
+    menuframe.configure(background=bg_color)
+    mainframe.configure(background=bg_color)
+    nowplaying.configure(background=bg_color)
+    small_button.configure(background=bg_color)
+    lowerframe.configure(background=bg_color)
+    settings_button.configure(background=bg_color)
+
 def open_window():
     global songname, songlength
     filename = fd.askopenfilename()
@@ -141,6 +154,9 @@ def updatebgcolor():
     small_button.configure(background=bg_color)
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
+    file = open("save.txt","w")
+    file.write(bg_color)
+    file.close()
     
 def updatefontcolor():
     global font_color
@@ -210,7 +226,7 @@ pause_button = tkinter.Button(
 pause_button.pack(side=RIGHT, padx=4)
 nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
 nowplaying.pack(anchor=N)
-
+initstuff()
 window.mainloop()
 
 #things ill need later for this/will implement once i get the buttons working/in there, compiled here so that i dont have to spend hours looking at docs every time i need to figure something like this out
