@@ -135,12 +135,22 @@ def updatebgcolor():
     bg_color = bgcolorset.get()
     print(bg_color)
     window.configure(background=bg_color) 
+    menuframe.configure(background=bg_color)
+    mainframe.configure(background=bg_color)
+    nowplaying.configure(background=bg_color)
+    small_button.configure(background=bg_color)
+    lowerframe.configure(background=bg_color)
+    settings_button.configure(background=bg_color)
     
 def updatefontcolor():
     global font_color
     font_color = fontcolorset.get()
     print(font_color)
-    window.update() 
+
+    nowplaying.configure(foreground=font_color)
+    small_button.configure(foreground=font_color)
+    
+    settings_button.configure(foreground=font_color)
     
 
 
