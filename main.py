@@ -1,4 +1,5 @@
 from tkinter import *
+from pathlib import Path
 import tkinter.messagebox
 from tkinter import filedialog as fd
 from pygame import mixer
@@ -62,6 +63,11 @@ def open_window():
     songlength= music.get_length()
     print(songlength)
     progressbar.config(to=songlength)
+
+def open_window2():
+    filename2 = fd.askopenfilename()
+    pygame.mixer.music.queue(filename2)
+    
     
 def update_progress_bar():
     global paused
