@@ -70,7 +70,7 @@ def initstuff():
     window.after(1000, musicqueueue) 
  
 def open_window():
-    global songname, songlength, queueueueueue, add_song_here_in_queueuue_ueueu_euue
+    global songname, songlength, queueueueueue, add_song_here_in_queueuue_ueueu_euue, songs_in_queueueueuuuuuuuuu
     if queueueueueue == 0:
         filename = fd.askopenfilename()
         mixer.music.load(filename)
@@ -88,6 +88,7 @@ def open_window():
         songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue]= tempsavingfilename #my favorite line in this whole file :DD
         print(songs_in_queueueueuuuuuuuuu)
         add_song_here_in_queueuue_ueueu_euue +=1
+        print (add_song_here_in_queueuue_ueueu_euue)
         queueueueueue +=1
 
 def musicqueueue():
@@ -103,6 +104,9 @@ def musicqueueue():
        progressbar.config(to=songlength)
        queueueueueue -=1
        nowplaying.config(text = songname)
+       songs_in_queueueueuuuuuuuuu.pop(0)
+       print(songs_in_queueueueuuuuuuuuu)
+       songhasbeenplayed= False
        window.update() 
     window.after(1000, musicqueueue)
     
