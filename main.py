@@ -1,9 +1,19 @@
+#this code follows no logic because who needs readability
+#Real programmers just do random shit, add no helpful notes, forget their code exists for like a year and then improvise even more random stuff to figure out what the hell any of their magic runes mean.
+# have i mentioned that im also deeply unfunny?
+#you WILL get eyecancer from my notes/sense of "humor"
+# :D
+
+
+
+#this could have been a multiline comment instead of multiple one line ones actually. I may be incompetent
 from tkinter import *
 from pathlib import Path
 import tkinter.messagebox
 from tkinter import filedialog as fd
 from pygame import mixer
 import os
+import time
 
 bg_color = "#313244"
 font_color= "#cdd6f4"
@@ -22,6 +32,11 @@ songname = "Nothing rn"
 progress= 0 # to show position later if i have time to implement that
 fontcolorset= tkinter.StringVar()
 bgcolorset = tkinter.StringVar()
+queueueueueue = 0 #and the worst word in the english language goes tooooo.... whatever this bullshittery is. Only way to make queue acceptable to use is by adding progressively more ue to it. Trust.
+songs_in_queueueueuuuuuuuuu = [None] * 100
+add_song_here_in_queueuue_ueueu_euue = 0
+running= True
+songhasbeenplayed =False
 mixer.init()
 mainframe = Frame (
     bg= bg_color
@@ -46,27 +61,50 @@ def initstuff():
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
     nowplaying.configure(background=bg_color)
-    small_button.configure(background=bg_color)
+    small_button.configure(background=bg_color, activebackground=bg_color)
     lowerframe.configure(background=bg_color)
-    settings_button.configure(background=bg_color)
+    settings_button.configure(background=bg_color, activebackground=bg_color)
     nowplaying.configure(foreground=font_color)
     small_button.configure(foreground=font_color)
     settings_button.configure(foreground=font_color)
-
+    window.after(1000, musicqueueue) 
+ 
 def open_window():
-    global songname, songlength
-    filename = fd.askopenfilename()
-    mixer.music.load(filename)
-    mixer.music.set_volume(0.3)
-    songname =os.path.basename(filename)
-    music= mixer.Sound(filename)
-    songlength= music.get_length()
-    print(songlength)
-    progressbar.config(to=songlength)
+    global songname, songlength, queueueueueue, add_song_here_in_queueuue_ueueu_euue
+    if queueueueueue == 0:
+        filename = fd.askopenfilename()
+        mixer.music.load(filename)
+        mixer.music.set_volume(0.3)
+        songname =os.path.basename(filename)
+        music= mixer.Sound(filename)
+        songlength= music.get_length()
+        print(songlength)
+        progressbar.config(to=songlength)
+        nowplaying.config(text = songname)
+        window.update() 
+        queueueueueue +=1
+    else:
+        tempsavingfilename = fd.askopenfilename()
+        songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue]= tempsavingfilename #my favorite line in this whole file :DD
+        print(songs_in_queueueueuuuuuuuuu)
+        add_song_here_in_queueuue_ueueu_euue +=1
+        queueueueueue +=1
 
-def open_window2():
-    filename2 = fd.askopenfilename()
-    pygame.mixer.music.queue(filename2)
+def musicqueueue():
+    global queueueueueue, songname
+    if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed== True:
+       
+       filename= songs_in_queueueueuuuuuuuuu[0]
+       mixer.music.load(filename)
+       songname =os.path.basename(filename)
+       music= mixer.Sound(filename)
+       songlength= music.get_length()
+       print(songlength)
+       progressbar.config(to=songlength)
+       queueueueueue -=1
+       nowplaying.config(text = songname)
+       window.update() 
+    window.after(1000, musicqueueue)
     
     
 def update_progress_bar():
@@ -84,6 +122,7 @@ def play():
         mixer.music.play(),
         nowplaying.config(text = songname)
         window.update() 
+        songhasbeenplayed = True
     else:
         mixer.music.unpause()
         paused = False
