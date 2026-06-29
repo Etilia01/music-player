@@ -82,7 +82,7 @@ def open_window():
         progressbar.config(to=songlength)
         nowplaying.config(text = songname)
         window.update() 
-        queueueueueue +=1
+        queueueueueue +=2
     else:
         tempsavingfilename = fd.askopenfilename()
         songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue]= tempsavingfilename #my favorite line in this whole file :DD
@@ -91,8 +91,8 @@ def open_window():
         queueueueueue +=1
 
 def musicqueueue():
-    global queueueueueue, songname
-    if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed== True:
+    global queueueueueue, songname, songhasbeenplayed, filename
+    if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed:
        
        filename= songs_in_queueueueuuuuuuuuu[0]
        mixer.music.load(filename)
@@ -117,7 +117,7 @@ def update_progress_bar():
     
     
 def play():
-    global songname, paused
+    global songname, paused, songhasbeenplayed
     if paused == False :
         mixer.music.play(),
         nowplaying.config(text = songname)
@@ -126,6 +126,7 @@ def play():
     else:
         mixer.music.unpause()
         paused = False
+        songhasbeenplayed = True
     update_progress_bar()
     
 def pause():
