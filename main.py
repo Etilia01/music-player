@@ -24,7 +24,7 @@ window.title("Music :3")
 icon_image = tkinter.PhotoImage(file="images/icon.png")
 window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
-
+current_saved_volume = 30
 songlength= 0
 playlist = []
 paused = False
@@ -56,7 +56,7 @@ def initstuff():
     file = open("save.txt","r")
     file_list = eval(file.read())
     file.close()
-    bg_color, font_color = file_list
+    bg_color, font_color, current_saved_volume= file_list
     window.configure(background=bg_color) 
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
@@ -74,7 +74,7 @@ def open_window():
     if queueueueueue == 0:
         filename = fd.askopenfilename()
         mixer.music.load(filename)
-        mixer.music.set_volume(0.3)
+        mixer.music.set_volume(current_saved_volume)
         songname =os.path.basename(filename)
         music= mixer.Sound(filename)
         songlength= music.get_length()
@@ -155,12 +155,16 @@ small_button = tkinter.Button(
 )
 
 small_button.pack(side= LEFT, padx=50)
-current_saved_volume = 30
+
 def set_volume(val):
     global current_saved_volume
     current_saved_volume = int(val)
     volume= float(val) / 100
     mixer.music.set_volume(volume)
+    file = open("save.txt","w")
+    file.write(str([bg_color,font_color, current_saved_volume]))
+    file.close()
+
 
 def open_settings():
     
@@ -176,7 +180,7 @@ def open_settings():
                command = set_volume, fg=font_color)
     volume.pack(pady=15)
     volume.set(current_saved_volume)
-    mixer.music.set_volume(0.3)
+    mixer.music.set_volume(current_saved_volume)
     idk2 = tkinter.Label(settings_win, text="Backgroundcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk2.pack(pady=10)
     bgentry = tkinter.Entry(settings_win, textvariable=bgcolorset)
@@ -211,7 +215,7 @@ def updatebgcolor():
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color]))
+    file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
     
 def updatefontcolor():
@@ -224,7 +228,7 @@ def updatefontcolor():
     
     settings_button.configure(foreground=font_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color]))
+    file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
     
 
