@@ -107,10 +107,11 @@ def musicqueueue():
        songs_in_queueueueuuuuuuuuu.pop(0)
        print(songs_in_queueueueuuuuuuuuu)
        songhasbeenplayed= False
+       mixer.music.play()
        window.update() 
     window.after(1000, musicqueueue)
     
-    
+   
 def update_progress_bar():
     global paused
     if paused == False:
@@ -118,6 +119,7 @@ def update_progress_bar():
         print (position) #
         progressbar.set(position)
         window.after(1000, update_progress_bar)
+    
     
     
 def play():
@@ -153,6 +155,20 @@ small_button = tkinter.Button(
     activeforeground= accent_color1
     
 )
+def skip_back():
+    global position
+    mixer.music.rewind()
+    position = 0
+    print (position) 
+    progressbar.set(position)
+    mixer.music.play()
+def skip_ahead():
+    global position
+    mixer.music.stop()
+    position = 0 
+    print (position) 
+    progressbar.set(position)
+    
 
 small_button.pack(side= LEFT, padx=50)
 
@@ -264,6 +280,21 @@ playbutton= PhotoImage(file="images/pause.png")
 bigplaybutton= playbutton.zoom(3)
 pausebutton= PhotoImage(file="images/play.png")
 bigpausebutton= pausebutton.zoom(3)
+skip1button= PhotoImage(file="images/skip1.png")
+bigskip1button = skip1button.zoom(3)
+skip2button= PhotoImage(file="images/skip2.png")
+bigskip2button = skip2button.zoom(3)
+skip1_button = tkinter.Button(
+    mainframe,
+    image= bigskip2button,
+    width=50, 
+    height=50,  
+    padx=2,         
+    pady=2,             
+    command=skip_back,
+    
+)
+skip1_button.pack(side=LEFT, padx=3)
 play_button = tkinter.Button(
     mainframe,
     image= bigplaybutton,
@@ -274,7 +305,7 @@ play_button = tkinter.Button(
     command=play,
     
 )
-play_button.pack(side=LEFT, padx=4)
+play_button.pack(side=LEFT, padx=3)
 
 pause_button = tkinter.Button(
     mainframe,
@@ -286,7 +317,18 @@ pause_button = tkinter.Button(
     command=pause,
     
 )
-pause_button.pack(side=RIGHT, padx=4)
+pause_button.pack(side=LEFT, padx=3)
+skip2_button = tkinter.Button(
+    mainframe,
+    image= bigskip1button,
+    width=50, 
+    height=50,
+    padx=2,         
+    pady=2,             
+    command=skip_ahead,
+    
+)
+skip2_button.pack(side=RIGHT, padx=3)
 nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
 nowplaying.pack(anchor=N)
 initstuff()

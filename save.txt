@@ -1,1 +1,1 @@
-['blue', 'red']
+['pink', 'red', 53]
