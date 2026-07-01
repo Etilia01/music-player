@@ -81,9 +81,11 @@ def initstuff():
     small_button.configure(background=bg_color, activebackground=bg_color)
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color, activebackground=bg_color)
+    queue_button.configure(background=bg_color, activebackground=bg_color)
     nowplaying.configure(foreground=font_color)
     small_button.configure(foreground=font_color)
     settings_button.configure(foreground=font_color)
+    queue_button.configure(foreground=font_color)
     window.after(1000, musicqueueue) 
  
 
@@ -111,7 +113,7 @@ def open_window():
 
 
 def musicqueueue():
-    global queueueueueue, songname, songhasbeenplayed, filename
+    global queueueueueue, songname, songhasbeenplayed, filename, add_song_here_in_queueuue_ueueu_euue
     if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed:
        
        filename= songs_in_queueueueuuuuuuuuu[0]
@@ -127,7 +129,10 @@ def musicqueueue():
        print(songs_in_queueueueuuuuuuuuu)
        songhasbeenplayed= False
        mixer.music.play()
-       window.update() 
+       add_song_here_in_queueuue_ueueu_euue-=1
+       window.update()
+    if songs_in_queueueueuuuuuuuuu[0]==None and queueueueueue >=2:
+        songs_in_queueueueuuuuuuuuu.pop(0)
     window.after(1000, musicqueueue)
     
    
@@ -176,9 +181,8 @@ def skip_ahead():
     position = 0 
     print (position) 
     progressbar.set(position)
-    songhasbeenplayed = False
     
-
+    
 def set_volume(val):
     global current_saved_volume
     current_saved_volume = int(val)
@@ -239,6 +243,7 @@ def updatebgcolor():
     small_button.configure(background=bg_color)
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
+    queue_button.configure(background=bg_color)
     file = open("save.txt","w")
     file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
@@ -248,11 +253,10 @@ def updatefontcolor():
     global font_color
     font_color = fontcolorset.get()
     print(font_color)
-
     nowplaying.configure(foreground=font_color)
     small_button.configure(foreground=font_color)
-    
     settings_button.configure(foreground=font_color)
+    queue_button.configure(foreground=font_color)
     file = open("save.txt","w")
     file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
@@ -265,7 +269,7 @@ def show_queueueueueueue():
             x = 0
             break
         else:
-            print(songs_in_queueueueuuuuuuuuu[x])
+            print(os.path.basename(songs_in_queueueueuuuuuuuuu[x]))
             x+= 1
     
 
