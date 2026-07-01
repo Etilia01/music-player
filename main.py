@@ -1,5 +1,5 @@
-#this code follows no logic because who needs readability
-#Real programmers just do random shit, add no helpful notes, forget their code exists for like a year and then improvise even more random stuff to figure out what the hell any of their magic runes mean.
+#this code follows only a little bit of logic because who needs readability
+#Real programmers just do random shit, add almost no helpful notes, forget their code exists for like a year and then improvise even more random stuff to figure out what the hell any of their magic runes mean.
 # have i mentioned that im also deeply unfunny?
 #you WILL get eyecancer from my notes/sense of "humor"
 # :D
@@ -161,20 +161,22 @@ def pause():
 
 
 def skip_back():
-    global position
+    global position, songhasbeenplayed
     mixer.music.rewind()
     position = 0
     print (position) 
     progressbar.set(position)
     mixer.music.play()
+    songhasbeenplayed = False
 
 
 def skip_ahead():
-    global position
+    global position, songhasbeenplayed
     mixer.music.stop()
     position = 0 
     print (position) 
     progressbar.set(position)
+    songhasbeenplayed = False
     
 
 def set_volume(val):
@@ -254,6 +256,17 @@ def updatefontcolor():
     file = open("save.txt","w")
     file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
+
+
+def show_queueueueueueue():
+    x= 0
+    for i in range(100):
+        if songs_in_queueueueuuuuuuuuu[x] == None:
+            x = 0
+            break
+        else:
+            print(songs_in_queueueueuuuuuuuuu[x])
+            x+= 1
     
 
 
@@ -276,6 +289,23 @@ small_button = tkinter.Button(
     
     activeforeground= accent_color1)
 small_button.pack(side= LEFT, padx=50)    
+
+
+queue_button = tkinter.Button(
+    menuframe,
+    text="Print Queue", 
+    font=("Arial", 10),  
+    padx=0.5,         
+    pady=2,             
+    command=show_queueueueueueue,
+    bg= bg_color,
+    bd= 0,
+    highlightthickness=0,
+    fg= font_color,
+    activebackground= bg_color,
+    
+    activeforeground= accent_color1)
+queue_button.pack(side= LEFT, padx=50)  
 
 
 settings_button = tkinter.Button(
