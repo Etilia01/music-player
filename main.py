@@ -7,6 +7,8 @@
 
 
 #this could have been a multiline comment instead of multiple one line ones actually. I may be incompetent
+
+#imports
 from tkinter import *
 from pathlib import Path
 import tkinter.messagebox
@@ -15,6 +17,7 @@ from pygame import mixer
 import os
 import time
 
+#assigning things/base values of stuff (obviously)
 bg_color = "#313244"
 font_color= "#cdd6f4"
 accent_color1= "#cba6f7"
@@ -24,6 +27,14 @@ window.title("Music :3")
 icon_image = tkinter.PhotoImage(file="images/icon.png")
 window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
+playbutton= PhotoImage(file="images/pause.png")
+bigplaybutton= playbutton.zoom(3)
+pausebutton= PhotoImage(file="images/play.png")
+bigpausebutton= pausebutton.zoom(3)
+skip1button= PhotoImage(file="images/skip1.png")
+bigskip1button = skip1button.zoom(3)
+skip2button= PhotoImage(file="images/skip2.png")
+bigskip2button = skip2button.zoom(3)
 current_saved_volume = 30
 songlength= 0
 playlist = []
@@ -51,6 +62,12 @@ lowerframe = Frame (
 )
 lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
+
+
+
+
+
+#functions
 def initstuff():
     global bg_color, font_color
     file = open("save.txt","r")
@@ -69,6 +86,7 @@ def initstuff():
     settings_button.configure(foreground=font_color)
     window.after(1000, musicqueueue) 
  
+
 def open_window():
     global songname, songlength, queueueueueue, add_song_here_in_queueuue_ueueu_euue, songs_in_queueueueuuuuuuuuu
     if queueueueueue == 0:
@@ -90,6 +108,7 @@ def open_window():
         add_song_here_in_queueuue_ueueu_euue +=1
         print (add_song_here_in_queueuue_ueueu_euue)
         queueueueueue +=1
+
 
 def musicqueueue():
     global queueueueueue, songname, songhasbeenplayed, filename
@@ -120,8 +139,7 @@ def update_progress_bar():
         progressbar.set(position)
         window.after(1000, update_progress_bar)
     
-    
-    
+       
 def play():
     global songname, paused, songhasbeenplayed
     if paused == False :
@@ -134,27 +152,14 @@ def play():
         paused = False
         songhasbeenplayed = True
     update_progress_bar()
-    
+
+
 def pause():
     global paused
     mixer.music.pause()
     paused = True
-small_button = tkinter.Button(
-    menuframe,
-    text="Open File", 
-    font=("Arial", 10),  
-    padx=0.5,         
-    pady=2,             
-    command=open_window,
-    bg= bg_color,
-    bd= 0,
-    highlightthickness=0,
-    fg= font_color,
-    activebackground= bg_color,
-    
-    activeforeground= accent_color1
-    
-)
+
+
 def skip_back():
     global position
     mixer.music.rewind()
@@ -162,6 +167,8 @@ def skip_back():
     print (position) 
     progressbar.set(position)
     mixer.music.play()
+
+
 def skip_ahead():
     global position
     mixer.music.stop()
@@ -169,8 +176,6 @@ def skip_ahead():
     print (position) 
     progressbar.set(position)
     
-
-small_button.pack(side= LEFT, padx=50)
 
 def set_volume(val):
     global current_saved_volume
@@ -183,20 +188,20 @@ def set_volume(val):
 
 
 def open_settings():
-    
     settings_win = tkinter.Toplevel(
-        bg= bg_color,
-        
-    )
+        bg= bg_color,)
     settings_win.title("Settings")
     settings_win.geometry("250x400")
+
     idk = tkinter.Label(settings_win, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk.pack(pady=10)
+
     volume = Scale(settings_win, from_ = 0, to = 100, orient=HORIZONTAL, bg = bg_color,
                command = set_volume, fg=font_color)
     volume.pack(pady=15)
     volume.set(current_saved_volume)
     mixer.music.set_volume(current_saved_volume)
+
     idk2 = tkinter.Label(settings_win, text="Backgroundcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk2.pack(pady=10)
     bgentry = tkinter.Entry(settings_win, textvariable=bgcolorset)
@@ -219,6 +224,8 @@ def open_settings():
     pady=2,             
     command=updatefontcolor)
     submit2.pack(pady=1)
+
+
 def updatebgcolor():
     global bg_color
     bg_color = bgcolorset.get()
@@ -234,6 +241,7 @@ def updatebgcolor():
     file.write(str([bg_color,font_color, current_saved_volume]))
     file.close()
     
+
 def updatefontcolor():
     global font_color
     font_color = fontcolorset.get()
@@ -249,6 +257,27 @@ def updatefontcolor():
     
 
 
+
+
+
+#UI elements
+small_button = tkinter.Button(
+    menuframe,
+    text="Open File", 
+    font=("Arial", 10),  
+    padx=0.5,         
+    pady=2,             
+    command=open_window,
+    bg= bg_color,
+    bd= 0,
+    highlightthickness=0,
+    fg= font_color,
+    activebackground= bg_color,
+    
+    activeforeground= accent_color1)
+small_button.pack(side= LEFT, padx=50)    
+
+
 settings_button = tkinter.Button(
     menuframe,
     text="Settings", 
@@ -261,12 +290,10 @@ settings_button = tkinter.Button(
     highlightthickness=0,
     fg= font_color,
     activebackground= bg_color,
-    
-    activeforeground= accent_color1
-    
-)
-
+    activeforeground= accent_color1)
 settings_button.pack(side= RIGHT, padx=50)
+
+
 progressbar = tkinter.Scale (
     mainframe,
     from_=0,
@@ -276,14 +303,8 @@ progressbar = tkinter.Scale (
     length= 200
 )
 progressbar.pack(anchor=N, pady=30)
-playbutton= PhotoImage(file="images/pause.png")
-bigplaybutton= playbutton.zoom(3)
-pausebutton= PhotoImage(file="images/play.png")
-bigpausebutton= pausebutton.zoom(3)
-skip1button= PhotoImage(file="images/skip1.png")
-bigskip1button = skip1button.zoom(3)
-skip2button= PhotoImage(file="images/skip2.png")
-bigskip2button = skip2button.zoom(3)
+
+
 skip1_button = tkinter.Button(
     mainframe,
     image= bigskip2button,
@@ -292,9 +313,10 @@ skip1_button = tkinter.Button(
     padx=2,         
     pady=2,             
     command=skip_back,
-    
-)
+    )
 skip1_button.pack(side=LEFT, padx=3)
+
+
 play_button = tkinter.Button(
     mainframe,
     image= bigplaybutton,
@@ -303,9 +325,9 @@ play_button = tkinter.Button(
     padx=2,         
     pady=2,             
     command=play,
-    
 )
 play_button.pack(side=LEFT, padx=3)
+
 
 pause_button = tkinter.Button(
     mainframe,
@@ -315,9 +337,10 @@ pause_button = tkinter.Button(
     padx=2,         
     pady=2,             
     command=pause,
-    
 )
 pause_button.pack(side=LEFT, padx=3)
+
+
 skip2_button = tkinter.Button(
     mainframe,
     image= bigskip1button,
@@ -326,15 +349,22 @@ skip2_button = tkinter.Button(
     padx=2,         
     pady=2,             
     command=skip_ahead,
-    
 )
 skip2_button.pack(side=RIGHT, padx=3)
+
+
 nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
 nowplaying.pack(anchor=N)
+
+
+
+
+
+
+#running init + the main window
 initstuff()
 window.mainloop()
 
 #things ill need later for this/will implement once i get the buttons working/in there, compiled here so that i dont have to spend hours looking at docs every time i need to figure something like this out
-#pygame.mixer.pause() self explanatory
-#pygame.mixer.unpause() same as above
+
 #pygame.mixer.fadeout(time) oooh, fancy stopping! ill make this an optional thingy with a little settings checkbox. maybe also to switch between songs once theyre in the last few seconds...?
