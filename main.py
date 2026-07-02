@@ -43,6 +43,7 @@ songname = "Nothing rn"
 progress= 0 # to show position later if i have time to implement that
 fontcolorset= tkinter.StringVar()
 bgcolorset = tkinter.StringVar()
+accentcolorset = tkinter.StringVar()
 queueueueueue = 0 #and the worst word in the english language goes tooooo.... whatever this bullshittery is. Only way to make queue acceptable to use is by adding progressively more ue to it. Trust.
 songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
@@ -69,11 +70,11 @@ lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
 #functions
 def initstuff():
-    global bg_color, font_color
+    global bg_color, font_color, accent_color1, current_saved_volume
     file = open("save.txt","r")
     file_list = eval(file.read())
     file.close()
-    bg_color, font_color, current_saved_volume= file_list
+    bg_color, font_color, current_saved_volume, accent_color1= file_list
     window.configure(background=bg_color) 
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
@@ -82,10 +83,12 @@ def initstuff():
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color, activebackground=bg_color)
     queue_button.configure(background=bg_color, activebackground=bg_color)
-    nowplaying.configure(foreground=font_color)
-    small_button.configure(foreground=font_color)
-    settings_button.configure(foreground=font_color)
-    queue_button.configure(foreground=font_color)
+    nowplaying.configure(foreground=font_color, activeforeground=accent_color1)
+    small_button.configure(foreground=font_color, activeforeground=accent_color1)
+    settings_button.configure(foreground=font_color, activeforeground=accent_color1)
+    queue_button.configure(foreground=font_color, activeforeground=accent_color1)
+    folder_button.configure(foreground=font_color, activeforeground=accent_color1)
+    folder_button.configure(background=bg_color, activebackground=bg_color)
     window.after(1000, musicqueueue) 
  
 
@@ -189,7 +192,7 @@ def set_volume(val):
     volume= float(val) / 100
     mixer.music.set_volume(volume)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
     file.close()
 
 
@@ -197,7 +200,7 @@ def open_settings():
     settings_win = tkinter.Toplevel(
         bg= bg_color,)
     settings_win.title("Settings")
-    settings_win.geometry("250x400")
+    settings_win.geometry("250x550")
 
     idk = tkinter.Label(settings_win, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk.pack(pady=10)
@@ -231,6 +234,18 @@ def open_settings():
     command=updatefontcolor)
     submit2.pack(pady=1)
 
+    idk4 = tkinter.Label(settings_win, text="Accentcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk4.pack(pady=10)
+    accentcolorentry = tkinter.Entry(settings_win, textvariable=accentcolorset)
+    accentcolorentry.pack(pady=15)
+    submit3 = tkinter.Button(
+    settings_win,
+    text="Update Settings",   
+    padx=0.5,         
+    pady=2,             
+    command=updateaccentcolor)
+    submit3.pack(pady=1)
+
 
 def updatebgcolor():
     global bg_color
@@ -244,8 +259,9 @@ def updatebgcolor():
     lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color)
     queue_button.configure(background=bg_color)
+    folder_button.configure(background=bg_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
     file.close()
     
 
@@ -257,12 +273,30 @@ def updatefontcolor():
     small_button.configure(foreground=font_color)
     settings_button.configure(foreground=font_color)
     queue_button.configure(foreground=font_color)
+    folder_button.configure(foreground=font_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.close()
+
+
+def updateaccentcolor():
+    global accent_color1
+    accent_color1 = accentcolorset.get()
+    print(accent_color1)
+    nowplaying.configure(activeforeground=accent_color1)
+    small_button.configure(activeforeground=accent_color1)
+    settings_button.configure(activeforeground=accent_color1)
+    queue_button.configure(activeforeground=accent_color1)
+    folder_button.configure(activeforeground=accent_color1)
+    file = open("save.txt","w")
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
     file.close()
 
 
 def show_queueueueueueue():
+    global songs_in_queueueueuuuuuuuuu
+    songs = [song for song in songs_in_queueueueuuuuuuuuu if song is not None]
+    list_variable = tkinter.Variable(value=songs)
     x= 0
     for i in range(100):
         if songs_in_queueueueuuuuuuuuu[x] == None:
@@ -271,6 +305,43 @@ def show_queueueueueueue():
         else:
             print(os.path.basename(songs_in_queueueueuuuuuuuuu[x]))
             x+= 1
+    
+    queue_win = tkinter.Toplevel(
+        bg= bg_color,)
+    queue_win.title("Queue")
+    queue_win.geometry("250x250")
+    queue_display= tkinter.Listbox(queue_win, listvariable=list_variable, height= 200, width=200)
+    queue_display.pack(padx=10, pady=10)
+    
+
+
+def open_folder():
+    global songhasbeenplayed, add_song_here_in_queueuue_ueueu_euue, songs_in_queueueueuuuuuuuuu, current_saved_volume, filename, queueueueueue, songname, songlength
+    
+    folder_path = fd.askdirectory(title="Select a Folder")
+    folder_contents = os.listdir(folder_path)
+    if queueueueueue == 0:
+        songname =os.path.basename(folder_contents[0])
+        filename = os.path.join(folder_path, songname)
+        mixer.music.load(filename)
+        mixer.music.set_volume(current_saved_volume)
+        music= mixer.Sound(filename)
+        songlength= music.get_length()
+        print(songlength)
+        progressbar.config(to=songlength)
+        nowplaying.config(text = songname)
+        window.update() 
+        queueueueueue +=2
+        songhasbeenplayed=False
+        for i in folder_contents[1:]:
+            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = i
+            add_song_here_in_queueuue_ueueu_euue +=1
+            
+    else:
+        for i in folder_contents:
+            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = i
+            add_song_here_in_queueuue_ueueu_euue +=1
+           
     
 
 
@@ -292,7 +363,24 @@ small_button = tkinter.Button(
     activebackground= bg_color,
     
     activeforeground= accent_color1)
-small_button.pack(side= LEFT, padx=50)    
+small_button.pack(side= LEFT, padx=20)    
+
+
+folder_button = tkinter.Button(
+    menuframe,
+    text="Open Folder", 
+    font=("Arial", 10),  
+    padx=0.5,         
+    pady=2,             
+    command=open_folder,
+    bg= bg_color,
+    bd= 0,
+    highlightthickness=0,
+    fg= font_color,
+    activebackground= bg_color,
+    
+    activeforeground= accent_color1)
+folder_button.pack(side= LEFT, padx=20)    
 
 
 queue_button = tkinter.Button(
@@ -309,7 +397,7 @@ queue_button = tkinter.Button(
     activebackground= bg_color,
     
     activeforeground= accent_color1)
-queue_button.pack(side= LEFT, padx=50)  
+queue_button.pack(side= LEFT, padx=20)  
 
 
 settings_button = tkinter.Button(
@@ -325,7 +413,7 @@ settings_button = tkinter.Button(
     fg= font_color,
     activebackground= bg_color,
     activeforeground= accent_color1)
-settings_button.pack(side= RIGHT, padx=50)
+settings_button.pack(side= RIGHT, padx=20)
 
 
 progressbar = tkinter.Scale (
