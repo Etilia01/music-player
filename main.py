@@ -51,6 +51,7 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
+script_dir = Path(__file__).resolve().parent
 mixer.init()
 mainframe = Frame (
     bg= bg_color
@@ -82,9 +83,9 @@ def initstuff():
     mainframe.configure(background=bg_color)
     nowplaying.configure(background=bg_color)
     small_button.configure(background=bg_color, activebackground=bg_color)
-    lowerframe.configure(background=bg_color)
     settings_button.configure(background=bg_color, activebackground=bg_color)
     queue_button.configure(background=bg_color, activebackground=bg_color)
+    lowerframe.configure(background=bg_color)
     nowplaying.configure(foreground=font_color, activeforeground=accent_color1)
     small_button.configure(foreground=font_color, activeforeground=accent_color1)
     settings_button.configure(foreground=font_color, activeforeground=accent_color1)
@@ -257,11 +258,11 @@ def updatebgcolor():
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
     nowplaying.configure(background=bg_color)
-    small_button.configure(background=bg_color)
     lowerframe.configure(background=bg_color)
-    settings_button.configure(background=bg_color)
-    queue_button.configure(background=bg_color)
-    folder_button.configure(background=bg_color)
+    folder_button.configure(background=bg_color, activebackground=bg_color)
+    small_button.configure(background=bg_color, activebackground=bg_color)
+    settings_button.configure(background=bg_color, activebackground=bg_color)
+    queue_button.configure(background=bg_color, activebackground=bg_color)
     file = open("save.txt","w")
     file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
     file.close()
@@ -336,13 +337,16 @@ def open_folder():
         queueueueueue +=2
         songhasbeenplayed=False
         for i in folder_contents[1:]:
-            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = i
+            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = os.path.join(folder_path, i)
             add_song_here_in_queueuue_ueueu_euue +=1
+            queueueueueue +=1
             
     else:
         for i in folder_contents:
-            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = i
+            songs_in_queueueueuuuuuuuuu[add_song_here_in_queueuue_ueueu_euue] = os.path.join(folder_path, i)
             add_song_here_in_queueuue_ueueu_euue +=1
+            print(songs_in_queueueueuuuuuuuuu[0])
+            queueueueueue +=1
            
     
 

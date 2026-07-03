@@ -1,1 +1,1 @@
-['red', '#a6e3a1', 63, 'yellow']
+['yellow', 'purple', 63, 'pink']
