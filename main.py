@@ -17,6 +17,7 @@ from pygame import mixer
 import os
 import time
 from PIL import Image
+import random
 
 #assigning things/base values of stuff (obviously)
 bg_color = "#313244"
@@ -36,6 +37,8 @@ skip1button= PhotoImage(file="images/skip1.png")
 bigskip1button = skip1button.zoom(3)
 skip2button= PhotoImage(file="images/skip2.png")
 bigskip2button = skip2button.zoom(3)
+shufflebutton= PhotoImage(file="images/shuffle.png")
+bigshuffle = shufflebutton.zoom(3)
 ghost= PhotoImage (file="images/ghostmusic.gif")
 current_saved_volume = 30
 songlength= 0
@@ -347,9 +350,13 @@ def open_folder():
             add_song_here_in_queueuue_ueueu_euue +=1
             print(songs_in_queueueueuuuuuuuuu[0])
             queueueueueue +=1
-           
-    
 
+
+def shuffle():
+    global songs_in_queueueueuuuuuuuuu
+    random.shuffle(songs_in_queueueueuuuuuuuuu)
+
+    
 
 
 
@@ -478,7 +485,19 @@ skip2_button = tkinter.Button(
     pady=2,             
     command=skip_ahead,
 )
-skip2_button.pack(side=RIGHT, padx=3)
+skip2_button.pack(side=LEFT, padx=3)
+
+
+shuffle_button = tkinter.Button(
+    mainframe,
+    image= bigshuffle,
+    width=50, 
+    height=50,
+    padx=2,         
+    pady=2,             
+    command=shuffle,
+)
+shuffle_button.pack(side=RIGHT, padx=3)
 
 
 nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
