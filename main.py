@@ -39,7 +39,8 @@ skip2button= PhotoImage(file="images/skip2.png")
 bigskip2button = skip2button.zoom(3)
 shufflebutton= PhotoImage(file="images/shuffle.png")
 bigshuffle = shufflebutton.zoom(3)
-ghost= PhotoImage (file="images/ghostmusic.gif")
+ghost= PhotoImage (file="images/ghostnomusic.png")
+ghost_bigger = ghost.zoom(5)
 current_saved_volume = 30
 songlength= 0
 playlist = []
@@ -54,6 +55,11 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
+
+
+frames = 13
+gifframes = []
+loop = None
 script_dir = Path(__file__).resolve().parent
 mixer.init()
 mainframe = Frame (
@@ -76,7 +82,7 @@ lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
 #functions
 def initstuff():
-    global bg_color, font_color, accent_color1, current_saved_volume
+    global bg_color, font_color, accent_color1, current_saved_volume, gifframes
     file = open("save.txt","r")
     file_list = eval(file.read())
     file.close()
@@ -96,6 +102,10 @@ def initstuff():
     folder_button.configure(foreground=font_color, activeforeground=accent_color1)
     folder_button.configure(background=bg_color, activebackground=bg_color)
     window.after(1000, musicqueueue) 
+    for i in range(frames):
+        obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
+        bigger_obj = obj.zoom(5)
+        gifframes.append(bigger_obj)
  
 
 def open_window():
@@ -122,8 +132,8 @@ def open_window():
 
 
 def musicqueueue():
-    global queueueueueue, songname, songhasbeenplayed, filename, add_song_here_in_queueuue_ueueu_euue
-    if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed:
+    global queueueueueue, songname, songhasbeenplayed, filename, add_song_here_in_queueuue_ueueu_euue, paused
+    if not mixer.music.get_busy() and queueueueueue >=2 and songhasbeenplayed and not paused:
        
        filename= songs_in_queueueueuuuuuuuuu[0]
        mixer.music.load(filename)
@@ -165,13 +175,15 @@ def play():
         mixer.music.unpause()
         paused = False
         songhasbeenplayed = True
+    animation()
     update_progress_bar()
 
 
 def pause():
-    global paused
+    global paused, notjustpaused
     mixer.music.pause()
     paused = True
+    stop_animation()
 
 
 def skip_back():
@@ -356,6 +368,21 @@ def shuffle():
     global songs_in_queueueueuuuuuuuuu
     random.shuffle(songs_in_queueueueuuuuuuuuu)
 
+
+def animation(current_frame=0):
+    global loop
+    
+    image = gifframes[current_frame]
+    companion.configure(image = image)
+    current_frame = current_frame + 1
+    loop = window.after(120, lambda: animation(current_frame))
+    if current_frame == frames:
+        current_frame = 0 
+
+
+def stop_animation():
+    window.after_cancel(loop)
+
     
 
 
@@ -427,6 +454,12 @@ settings_button = tkinter.Button(
     activebackground= bg_color,
     activeforeground= accent_color1)
 settings_button.pack(side= RIGHT, padx=20)
+
+companion = tkinter.Label(mainframe, image=ghost_bigger)
+companion.pack(anchor=S, pady=5)
+
+nowplaying= tkinter.Label(mainframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
+nowplaying.pack(anchor=N)
 
 
 progressbar = tkinter.Scale (
@@ -500,11 +533,7 @@ shuffle_button = tkinter.Button(
 shuffle_button.pack(side=RIGHT, padx=3)
 
 
-nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
-nowplaying.pack(anchor=N)
 
-companion = tkinter.Label(window, image=ghost)
-companion.place(rely=1.0, relx=1.0, x=0, y=0, anchor=SE)
 
 
 
