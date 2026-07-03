@@ -16,6 +16,7 @@ from tkinter import filedialog as fd
 from pygame import mixer
 import os
 import time
+from PIL import Image
 
 #assigning things/base values of stuff (obviously)
 bg_color = "#313244"
@@ -35,6 +36,7 @@ skip1button= PhotoImage(file="images/skip1.png")
 bigskip1button = skip1button.zoom(3)
 skip2button= PhotoImage(file="images/skip2.png")
 bigskip2button = skip2button.zoom(3)
+ghost= PhotoImage (file="images/ghostmusic.gif")
 current_saved_volume = 30
 songlength= 0
 playlist = []
@@ -478,7 +480,8 @@ skip2_button.pack(side=RIGHT, padx=3)
 nowplaying= tkinter.Label(lowerframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
 nowplaying.pack(anchor=N)
 
-
+companion = tkinter.Label(window, image=ghost)
+companion.place(rely=1.0, relx=1.0, x=0, y=0, anchor=SE)
 
 
 
