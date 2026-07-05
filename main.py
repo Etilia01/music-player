@@ -56,7 +56,8 @@ draskip1button= PhotoImage(file="images/skip14.png")
 draskip2button= PhotoImage(file="images/skip24.png")
 drashufflebutton= PhotoImage(file="images/shuffle4.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
-ghost_bigger = ghost.zoom(5)
+bigger_obj = ghost.zoom(5)
+companionvar = "ghost"
 current_saved_volume = 30
 songlength= 0
 playlist = []
@@ -75,6 +76,7 @@ themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "ros
 selected_theme = StringVar(value="None")
 frames = 13
 gifframes = []
+obj= None
 loop = None
 script_dir = Path(__file__).resolve().parent
 mixer.init()
@@ -98,11 +100,11 @@ lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
 #functions
 def initstuff():
-    global bg_color, font_color, accent_color1, current_saved_volume, gifframes, temptheme, bigpausebutton, bigplaybutton, bigshuffle, bigskip1button, bigskip2button
+    global bigger_obj, obj, bg_color, font_color, accent_color1, current_saved_volume, gifframes, temptheme, bigpausebutton, bigplaybutton, bigshuffle, bigskip1button, bigskip2button, companionvar
     file = open("save.txt","r")
     file_list = eval(file.read())
     file.close()
-    bg_color, font_color, current_saved_volume, accent_color1, temptheme= file_list
+    bg_color, font_color, current_saved_volume, accent_color1, temptheme, companionvar= file_list
     window.configure(background=bg_color) 
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
@@ -118,10 +120,49 @@ def initstuff():
     folder_button.configure(foreground=font_color, activeforeground=accent_color1)
     folder_button.configure(background=bg_color, activebackground=bg_color)
     window.after(1000, musicqueueue) 
-    for i in range(frames):
-        obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
-        bigger_obj = obj.zoom(5)
-        gifframes.append(bigger_obj)
+    if companionvar== "ghost":
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(5)
+            gifframes.append(bigger_obj)
+    if companionvar== "cat":
+        
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/cat.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(4)
+            gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/cat.png")
+        bigger_obj = obj.zoom(4)
+        companion.configure(image = bigger_obj)
+        companion.update_idletasks()
+    if companionvar== "none":
+        if temptheme== "catppuccin mocha":
+            obj = tkinter.PhotoImage(file = "images/none1.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
+        if temptheme== "dracula":
+            obj = tkinter.PhotoImage(file = "images/none2.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "rose pine":
+            obj = tkinter.PhotoImage(file = "images/none3.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "rose pine dawn":
+            obj = tkinter.PhotoImage(file = "images/none4.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "halloween":
+            obj = tkinter.PhotoImage(file = "images/none5.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "hacker":
+            obj = tkinter.PhotoImage(file = "images/none6.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        
     if temptheme=="hacker":
         bigshuffle=hackshufflebutton.zoom(3)
         bigplaybutton = hackplaybutton.zoom(3)
@@ -249,7 +290,7 @@ def set_volume(val):
     volume= float(val) / 100
     mixer.music.set_volume(volume)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()
 
 
@@ -353,7 +394,7 @@ def updatebgcolor():
     settings_button.configure(background=bg_color, activebackground=bg_color)
     queue_button.configure(background=bg_color, activebackground=bg_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()
     
 
@@ -367,7 +408,7 @@ def updatefontcolor():
     queue_button.configure(foreground=font_color)
     folder_button.configure(foreground=font_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()
 
 
@@ -381,7 +422,7 @@ def updateaccentcolor():
     queue_button.configure(activeforeground=accent_color1)
     folder_button.configure(activeforeground=accent_color1)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()
 
 
@@ -397,6 +438,8 @@ def set_theme():
         bigpausebutton = pausebutton.zoom(3)
         bigskip1button = skip1button.zoom(3)
         bigskip2button = skip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none1.png")
     if temptheme== "hacker":
         bg_color= "black"
         accent_color1= "#a6d189"
@@ -406,10 +449,14 @@ def set_theme():
         bigpausebutton = hackpausebutton.zoom(3)
         bigskip1button = hackskip1button.zoom(3)
         bigskip2button = hackskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none6.png")
     if temptheme== "halloween":
         bg_color= "#FF7600"
         accent_color1= "#CD113B"
         font_color = "#52006A"
+        if companionvar== "none":
+            companion.configure(image = "images/none5.png")
     if temptheme== "dracula":
         bg_color= "#282A36"
         accent_color1= "#FF5555"
@@ -419,6 +466,8 @@ def set_theme():
         bigpausebutton = drapausebutton.zoom(3)
         bigskip1button = draskip1button.zoom(3)
         bigskip2button = draskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none2.png")
     if temptheme== "rose pine":
         bg_color= "#191724"
         accent_color1= "#ebbcba"
@@ -428,6 +477,8 @@ def set_theme():
         bigpausebutton = rosepausebutton.zoom(3)
         bigskip1button = roseskip1button.zoom(3)
         bigskip2button = roseskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none3.png")
     if temptheme== "rose pine dawn":
         bg_color= "#faf4ed"
         accent_color1= "#d7827e"
@@ -437,6 +488,8 @@ def set_theme():
         bigpausebutton = rosepausebutton.zoom(3)
         bigskip1button = roseskip1button.zoom(3)
         bigskip2button = roseskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none4.png")
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -462,7 +515,7 @@ def set_theme():
     skip1_button.configure(image=bigskip1button)
     skip2_button.configure(image=bigskip2button)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()    
     window.update()
     
@@ -527,17 +580,20 @@ def shuffle():
 
 def animation(current_frame=0):
     global loop
-    
-    image = gifframes[current_frame]
-    companion.configure(image = image)
-    current_frame = current_frame + 1
-    loop = window.after(120, lambda: animation(current_frame))
-    if current_frame == frames:
-        current_frame = 0 
+    if companionvar=="none":
+        companion.configure(image= bigger_obj)
+    else:
+        image = gifframes[current_frame]
+        companion.configure(image = image)
+        current_frame = current_frame + 1
+        loop = window.after(120, lambda: animation(current_frame))
+        if current_frame == frames:
+            current_frame = 0 
 
 
 def stop_animation():
-    window.after_cancel(loop)
+    if companionvar != "none":
+        window.after_cancel(loop)
 
     
 
@@ -611,7 +667,7 @@ settings_button = tkinter.Button(
     activeforeground= accent_color1)
 settings_button.pack(side= RIGHT, padx=20)
 
-companion = tkinter.Label(mainframe, image=ghost_bigger)
+companion = tkinter.Label(mainframe, image=bigger_obj)
 companion.pack(anchor=S, pady=5)
 
 nowplaying= tkinter.Label(mainframe, text = "Nothing rn", font=(12), fg=font_color, bg=bg_color)
