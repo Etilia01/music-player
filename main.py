@@ -55,8 +55,8 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-
-
+themes= ["catppuccin mocha", "dracula", "hacker", "halloween"]
+selected_theme = StringVar(value="None")
 frames = 13
 gifframes = []
 loop = None
@@ -215,54 +215,89 @@ def set_volume(val):
 
 
 def open_settings():
+    global themes, selected_theme
     settings_win = tkinter.Toplevel(
         bg= bg_color,)
     settings_win.title("Settings")
-    settings_win.geometry("250x550")
+    settings_win.geometry("290x500")
+    
+    canvas = Canvas(settings_win, background= accent_color1)
+    scrollbar = Scrollbar(settings_win, orient=VERTICAL, command=canvas.yview)
+    scrollbar.pack(side=RIGHT, fill=Y)
+    canvas.pack(anchor=CENTER, fill=BOTH, expand=True)
+    settings_frame = Frame(
+    canvas,
+    bg=bg_color,
+    pady=15,
+    padx=15
+    )
+    
 
-    idk = tkinter.Label(settings_win, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
+    canvas.configure(yscrollcommand=scrollbar.set)
+    
+
+    canvas.create_window((0, 0), window=settings_frame, anchor="nw")
+    settings_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+    
+    idk = tkinter.Label(settings_frame, text="Volume", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk.pack(pady=10)
 
-    volume = Scale(settings_win, from_ = 0, to = 100, orient=HORIZONTAL, bg = bg_color,
+    volume = Scale(settings_frame, from_ = 0, to = 100, orient=HORIZONTAL, bg = bg_color,
                command = set_volume, fg=font_color)
     volume.pack(pady=15)
     volume.set(current_saved_volume)
     mixer.music.set_volume(current_saved_volume)
-
-    idk2 = tkinter.Label(settings_win, text="Backgroundcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
+    heading1= tkinter.Label(
+        settings_frame, text="Themes", font=("Arial", 18), fg=font_color, bg= bg_color
+    )
+    heading1.pack(pady=15)
+    OptionMenu(settings_frame, selected_theme, *themes).pack(pady=10)
+    submit4 = tkinter.Button(
+        settings_frame,
+        text="Update Settings",   
+        padx=0.5,         
+        pady=2,             
+        command=set_theme)
+    submit4.pack(pady=5)
+    heading2= tkinter.Label(
+        settings_frame, text="Custom", font=("Arial", 18), fg=font_color, bg= bg_color
+    )
+    heading2.pack(pady=15)
+    idk2 = tkinter.Label(settings_frame, text="Backgroundcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk2.pack(pady=10)
-    bgentry = tkinter.Entry(settings_win, textvariable=bgcolorset)
+    bgentry = tkinter.Entry(settings_frame, textvariable=bgcolorset)
     bgentry.pack(pady=15)
     submit1 = tkinter.Button(
-    settings_win,
+    settings_frame,
     text="Update Settings",   
     padx=0.5,         
     pady=2,             
     command=updatebgcolor,)
-    submit1.pack(pady=1)
-    idk3 = tkinter.Label(settings_win, text="Fontcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
+    submit1.pack(pady=5)
+    idk3 = tkinter.Label(settings_frame, text="Fontcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk3.pack(pady=10)
-    fontcolorentry = tkinter.Entry(settings_win, textvariable=fontcolorset)
+    fontcolorentry = tkinter.Entry(settings_frame, textvariable=fontcolorset)
     fontcolorentry.pack(pady=15)
     submit2 = tkinter.Button(
-    settings_win,
+    settings_frame,
     text="Update Settings",   
     padx=0.5,         
     pady=2,             
     command=updatefontcolor)
-    submit2.pack(pady=1)
+    submit2.pack(pady=5)
 
-    idk4 = tkinter.Label(settings_win, text="Accentcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
+    idk4 = tkinter.Label(settings_frame, text="Accentcolor (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
     idk4.pack(pady=10)
-    accentcolorentry = tkinter.Entry(settings_win, textvariable=accentcolorset)
+    accentcolorentry = tkinter.Entry(settings_frame, textvariable=accentcolorset)
     accentcolorentry.pack(pady=15)
     submit3 = tkinter.Button(
-    settings_win,
+    settings_frame,
     text="Update Settings",   
     padx=0.5,         
     pady=2,             
     command=updateaccentcolor)
-    submit3.pack(pady=1)
+    submit3.pack(pady=5)
 
 
 def updatebgcolor():
@@ -310,6 +345,49 @@ def updateaccentcolor():
     file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
     file.close()
 
+
+def set_theme():
+    global bg_color, font_color, accent_color1, selected_theme
+    temptheme= selected_theme.get()
+    if temptheme== "catppuccin mocha":
+        bg_color= "#1e1e2e"
+        accent_color1= "#cba6f7"
+        font_color = "#cdd6f4"
+    if temptheme== "hacker":
+        bg_color= "black"
+        accent_color1= "#a6d189"
+        font_color = "green"
+    if temptheme== "halloween":
+        bg_color= "#FF7600"
+        accent_color1= "#CD113B"
+        font_color = "#52006A"
+    if temptheme== "dracula":
+        bg_color= "#282A36"
+        accent_color1= "#FF5555"
+        font_color = "#F8F8F2"
+    nowplaying.configure(activeforeground=accent_color1)
+    small_button.configure(activeforeground=accent_color1)
+    settings_button.configure(activeforeground=accent_color1)
+    queue_button.configure(activeforeground=accent_color1)
+    folder_button.configure(activeforeground=accent_color1)
+    nowplaying.configure(foreground=font_color)
+    small_button.configure(foreground=font_color)
+    settings_button.configure(foreground=font_color)
+    queue_button.configure(foreground=font_color)
+    folder_button.configure(foreground=font_color)
+    window.configure(background=bg_color) 
+    menuframe.configure(background=bg_color)
+    mainframe.configure(background=bg_color)
+    nowplaying.configure(background=bg_color)
+    lowerframe.configure(background=bg_color)
+    folder_button.configure(background=bg_color, activebackground=bg_color)
+    small_button.configure(background=bg_color, activebackground=bg_color)
+    settings_button.configure(background=bg_color, activebackground=bg_color)
+    queue_button.configure(background=bg_color, activebackground=bg_color)
+    file = open("save.txt","w")
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.close()    
+    
 
 def show_queueueueueueue():
     global songs_in_queueueueuuuuuuuuu
