@@ -29,6 +29,7 @@ window.title("Music :3")
 icon_image = tkinter.PhotoImage(file="images/icon.png")
 window.iconphoto(False, icon_image)
 window.configure(background = bg_color)
+temptheme = "none"
 playbutton= PhotoImage(file="images/pause.png")
 bigplaybutton= playbutton.zoom(3)
 pausebutton= PhotoImage(file="images/play.png")
@@ -39,6 +40,21 @@ skip2button= PhotoImage(file="images/skip2.png")
 bigskip2button = skip2button.zoom(3)
 shufflebutton= PhotoImage(file="images/shuffle.png")
 bigshuffle = shufflebutton.zoom(3)
+hackplaybutton= PhotoImage(file="images/pause2.png")
+hackpausebutton= PhotoImage(file="images/play2.png")
+hackskip1button= PhotoImage(file="images/skip12.png")
+hackskip2button= PhotoImage(file="images/skip22.png")
+hackshufflebutton= PhotoImage(file="images/shuffle2.png")
+roseplaybutton= PhotoImage(file="images/pause3.png")
+rosepausebutton= PhotoImage(file="images/play3.png")
+roseskip1button= PhotoImage(file="images/skip13.png")
+roseskip2button= PhotoImage(file="images/skip23.png")
+roseshufflebutton= PhotoImage(file="images/shuffle3.png")
+draplaybutton= PhotoImage(file="images/pause4.png")
+drapausebutton= PhotoImage(file="images/play4.png")
+draskip1button= PhotoImage(file="images/skip14.png")
+draskip2button= PhotoImage(file="images/skip24.png")
+drashufflebutton= PhotoImage(file="images/shuffle4.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
 ghost_bigger = ghost.zoom(5)
 current_saved_volume = 30
@@ -55,7 +71,7 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-themes= ["catppuccin mocha", "dracula", "hacker", "halloween"]
+themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn"]
 selected_theme = StringVar(value="None")
 frames = 13
 gifframes = []
@@ -82,11 +98,11 @@ lowerframe.place(relx=0.5, rely=0.3 , anchor=S)
 
 #functions
 def initstuff():
-    global bg_color, font_color, accent_color1, current_saved_volume, gifframes
+    global bg_color, font_color, accent_color1, current_saved_volume, gifframes, temptheme, bigpausebutton, bigplaybutton, bigshuffle, bigskip1button, bigskip2button
     file = open("save.txt","r")
     file_list = eval(file.read())
     file.close()
-    bg_color, font_color, current_saved_volume, accent_color1= file_list
+    bg_color, font_color, current_saved_volume, accent_color1, temptheme= file_list
     window.configure(background=bg_color) 
     menuframe.configure(background=bg_color)
     mainframe.configure(background=bg_color)
@@ -106,6 +122,29 @@ def initstuff():
         obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
         bigger_obj = obj.zoom(5)
         gifframes.append(bigger_obj)
+    if temptheme=="hacker":
+        bigshuffle=hackshufflebutton.zoom(3)
+        bigplaybutton = hackplaybutton.zoom(3)
+        bigpausebutton = hackpausebutton.zoom(3)
+        bigskip1button = hackskip1button.zoom(3)
+        bigskip2button = hackskip2button.zoom(3)
+    if temptheme== "rose pine" or temptheme == "rose pine dawn":
+        bigshuffle=roseshufflebutton.zoom(3)
+        bigplaybutton = roseplaybutton.zoom(3)
+        bigpausebutton = rosepausebutton.zoom(3)
+        bigskip1button = roseskip1button.zoom(3)
+        bigskip2button = roseskip2button.zoom(3)
+    if temptheme== "dracula":
+        bigshuffle=drashufflebutton.zoom(3)
+        bigplaybutton = draplaybutton.zoom(3)
+        bigpausebutton = drapausebutton.zoom(3)
+        bigskip1button = draskip1button.zoom(3)
+        bigskip2button = draskip2button.zoom(3)
+    shuffle_button.configure(image=bigshuffle)
+    play_button.configure(image=bigplaybutton)
+    pause_button.configure(image=bigpausebutton)
+    skip1_button.configure(image=bigskip1button)
+    skip2_button.configure(image=bigskip2button)
  
 
 def open_window():
@@ -210,7 +249,7 @@ def set_volume(val):
     volume= float(val) / 100
     mixer.music.set_volume(volume)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
     file.close()
 
 
@@ -314,7 +353,7 @@ def updatebgcolor():
     settings_button.configure(background=bg_color, activebackground=bg_color)
     queue_button.configure(background=bg_color, activebackground=bg_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
     file.close()
     
 
@@ -328,7 +367,7 @@ def updatefontcolor():
     queue_button.configure(foreground=font_color)
     folder_button.configure(foreground=font_color)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
     file.close()
 
 
@@ -342,21 +381,31 @@ def updateaccentcolor():
     queue_button.configure(activeforeground=accent_color1)
     folder_button.configure(activeforeground=accent_color1)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
     file.close()
 
 
 def set_theme():
-    global bg_color, font_color, accent_color1, selected_theme
+    global bg_color, font_color, accent_color1, selected_theme, bigpausebutton, bigplaybutton, bigshuffle, bigskip1button, bigskip2button, temptheme
     temptheme= selected_theme.get()
     if temptheme== "catppuccin mocha":
         bg_color= "#1e1e2e"
         accent_color1= "#cba6f7"
         font_color = "#cdd6f4"
+        bigshuffle=shufflebutton.zoom(3)
+        bigplaybutton = playbutton.zoom(3)
+        bigpausebutton = pausebutton.zoom(3)
+        bigskip1button = skip1button.zoom(3)
+        bigskip2button = skip2button.zoom(3)
     if temptheme== "hacker":
         bg_color= "black"
         accent_color1= "#a6d189"
-        font_color = "green"
+        font_color= "green"
+        bigshuffle=hackshufflebutton.zoom(3)
+        bigplaybutton = hackplaybutton.zoom(3)
+        bigpausebutton = hackpausebutton.zoom(3)
+        bigskip1button = hackskip1button.zoom(3)
+        bigskip2button = hackskip2button.zoom(3)
     if temptheme== "halloween":
         bg_color= "#FF7600"
         accent_color1= "#CD113B"
@@ -365,6 +414,29 @@ def set_theme():
         bg_color= "#282A36"
         accent_color1= "#FF5555"
         font_color = "#F8F8F2"
+        bigshuffle=drashufflebutton.zoom(3)
+        bigplaybutton = draplaybutton.zoom(3)
+        bigpausebutton = drapausebutton.zoom(3)
+        bigskip1button = draskip1button.zoom(3)
+        bigskip2button = draskip2button.zoom(3)
+    if temptheme== "rose pine":
+        bg_color= "#191724"
+        accent_color1= "#ebbcba"
+        font_color = "#e0def4"
+        bigshuffle=roseshufflebutton.zoom(3)
+        bigplaybutton = roseplaybutton.zoom(3)
+        bigpausebutton = rosepausebutton.zoom(3)
+        bigskip1button = roseskip1button.zoom(3)
+        bigskip2button = roseskip2button.zoom(3)
+    if temptheme== "rose pine dawn":
+        bg_color= "#faf4ed"
+        accent_color1= "#d7827e"
+        font_color = "#464261"
+        bigshuffle=roseshufflebutton.zoom(3)
+        bigplaybutton = roseplaybutton.zoom(3)
+        bigpausebutton = rosepausebutton.zoom(3)
+        bigskip1button = roseskip1button.zoom(3)
+        bigskip2button = roseskip2button.zoom(3)
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -384,9 +456,15 @@ def set_theme():
     small_button.configure(background=bg_color, activebackground=bg_color)
     settings_button.configure(background=bg_color, activebackground=bg_color)
     queue_button.configure(background=bg_color, activebackground=bg_color)
+    shuffle_button.configure(image=bigshuffle)
+    play_button.configure(image=bigplaybutton)
+    pause_button.configure(image=bigpausebutton)
+    skip1_button.configure(image=bigskip1button)
+    skip2_button.configure(image=bigskip2button)
     file = open("save.txt","w")
-    file.write(str([bg_color,font_color, current_saved_volume, accent_color1]))
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme]))
     file.close()    
+    window.update()
     
 
 def show_queueueueueueue():
