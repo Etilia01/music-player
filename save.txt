@@ -1,1 +1,1 @@
-['#282A36', '#F8F8F2', 44, '#FF5555', 'dracula', 'cat']
+['#2E383C', '#D3C6AA', 44, '#A7C080', 'dracula', 'ghost']

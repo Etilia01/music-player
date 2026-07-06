@@ -74,6 +74,8 @@ running= True
 songhasbeenplayed =False
 themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn"]
 selected_theme = StringVar(value="None")
+companions= ["none", "ghost", "cat"]
+selected_companion = StringVar(value="none")
 frames = 13
 gifframes = []
 obj= None
@@ -125,6 +127,9 @@ def initstuff():
             obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
             bigger_obj = obj.zoom(5)
             gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/ghostnomusic.png")
+        bigger_obj = obj.zoom(5)
+        companion.configure(image = bigger_obj)
     if companionvar== "cat":
         
         for i in range(frames):
@@ -295,7 +300,7 @@ def set_volume(val):
 
 
 def open_settings():
-    global themes, selected_theme
+    global themes, selected_theme, companions, selected_companion
     settings_win = tkinter.Toplevel(
         bg= bg_color,)
     settings_win.title("Settings")
@@ -378,6 +383,18 @@ def open_settings():
     pady=2,             
     command=updateaccentcolor)
     submit3.pack(pady=5)
+    heading3= tkinter.Label(
+        settings_frame, text="Listening Companion", font=("Arial", 18), fg=font_color, bg= bg_color
+    )
+    heading3.pack(pady=15)
+    OptionMenu(settings_frame, selected_companion, *companions).pack(pady=10)
+    submit4 = tkinter.Button(
+        settings_frame,
+        text="Update Settings",   
+        padx=0.5,         
+        pady=2,             
+        command=set_companion)
+    submit4.pack(pady=5)
 
 
 def updatebgcolor():
@@ -490,6 +507,10 @@ def set_theme():
         bigskip2button = roseskip2button.zoom(3)
         if companionvar== "none":
             companion.configure(image = "images/none4.png")
+    if temptheme== "everforest":
+        bg_color= "#2E383C"
+        accent_color1= "#A7C080"
+        font_color = "#D3C6AA"
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -518,7 +539,61 @@ def set_theme():
     file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()    
     window.update()
-    
+
+
+def set_companion():
+    global companionvar, selected_companion, obj, bigger_obj, gifframes, frames
+    companionvar= selected_companion.get()
+    if companionvar == "none":
+        if temptheme== "catppuccin mocha":
+            obj = tkinter.PhotoImage(file = "images/none1.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
+        if temptheme== "dracula":
+            obj = tkinter.PhotoImage(file = "images/none2.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "rose pine":
+            obj = tkinter.PhotoImage(file = "images/none3.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "rose pine dawn":
+            obj = tkinter.PhotoImage(file = "images/none4.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "halloween":
+            obj = tkinter.PhotoImage(file = "images/none5.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "hacker":
+            obj = tkinter.PhotoImage(file = "images/none6.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+    if companionvar== "cat":
+        gifframes= []
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/cat.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(4)
+            gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/cat.png")
+        bigger_obj = obj.zoom(4)
+        companion.configure(image = bigger_obj)
+    if companionvar=="ghost":
+        gifframes= []
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/ghostmusict.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(4)
+            gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/ghostnomusic.png")
+        bigger_obj = obj.zoom(4)
+        companion.configure(image = bigger_obj)
+    file = open("save.txt","w")
+    file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
+    file.close()    
+    window.update()
+
 
 def show_queueueueueueue():
     global songs_in_queueueueuuuuuuuuu
