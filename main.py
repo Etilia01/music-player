@@ -42,19 +42,24 @@ shufflebutton= PhotoImage(file="images/shuffle.png")
 bigshuffle = shufflebutton.zoom(3)
 hackplaybutton= PhotoImage(file="images/pause2.png")
 hackpausebutton= PhotoImage(file="images/play2.png")
-hackskip1button= PhotoImage(file="images/skip12.png")
-hackskip2button= PhotoImage(file="images/skip22.png")
+hackskip2button= PhotoImage(file="images/skip12.png")
+hackskip1button= PhotoImage(file="images/skip22.png")
 hackshufflebutton= PhotoImage(file="images/shuffle2.png")
 roseplaybutton= PhotoImage(file="images/pause3.png")
 rosepausebutton= PhotoImage(file="images/play3.png")
-roseskip1button= PhotoImage(file="images/skip13.png")
-roseskip2button= PhotoImage(file="images/skip23.png")
+roseskip2button= PhotoImage(file="images/skip13.png")
+roseskip1button= PhotoImage(file="images/skip23.png")
 roseshufflebutton= PhotoImage(file="images/shuffle3.png")
 draplaybutton= PhotoImage(file="images/pause4.png")
 drapausebutton= PhotoImage(file="images/play4.png")
-draskip1button= PhotoImage(file="images/skip14.png")
-draskip2button= PhotoImage(file="images/skip24.png")
+draskip2button= PhotoImage(file="images/skip14.png")
+draskip1button= PhotoImage(file="images/skip24.png")
 drashufflebutton= PhotoImage(file="images/shuffle4.png")
+greenplaybutton= PhotoImage(file="images/pause5.png")
+greenpausebutton= PhotoImage(file="images/play5.png")
+greenskip2button= PhotoImage(file="images/skip15.png")
+greenskip1button= PhotoImage(file="images/skip25.png")
+greenshufflebutton= PhotoImage(file="images/shuffle5.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
 bigger_obj = ghost.zoom(5)
 companionvar = "ghost"
@@ -72,9 +77,9 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn"]
+themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest"]
 selected_theme = StringVar(value="None")
-companions= ["none", "ghost", "cat"]
+companions= ["none", "ghost", "cat", "owl"]
 selected_companion = StringVar(value="none")
 frames = 13
 gifframes = []
@@ -140,6 +145,16 @@ def initstuff():
         bigger_obj = obj.zoom(4)
         companion.configure(image = bigger_obj)
         companion.update_idletasks()
+    if companionvar== "owl":
+        
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/owl.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(4)
+            gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/owl.png")
+        bigger_obj = obj.zoom(4)
+        companion.configure(image = bigger_obj)
+       
     if companionvar== "none":
         if temptheme== "catppuccin mocha":
             obj = tkinter.PhotoImage(file = "images/none1.png")
@@ -167,6 +182,10 @@ def initstuff():
             obj = tkinter.PhotoImage(file = "images/none6.png")
             bigger_obj = obj.zoom(4)
             companion.configure(image=bigger_obj)
+        if temptheme== "everforest":
+            obj = tkinter.PhotoImage(file = "images/none7.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
         
     if temptheme=="hacker":
         bigshuffle=hackshufflebutton.zoom(3)
@@ -186,6 +205,12 @@ def initstuff():
         bigpausebutton = drapausebutton.zoom(3)
         bigskip1button = draskip1button.zoom(3)
         bigskip2button = draskip2button.zoom(3)
+    if temptheme== "everforest":
+        bigshuffle=drashufflebutton.zoom(3)
+        bigplaybutton = greenplaybutton.zoom(3)
+        bigpausebutton = greenpausebutton.zoom(3)
+        bigskip1button = greenskip1button.zoom(3)
+        bigskip2button = greenskip2button.zoom(3)
     shuffle_button.configure(image=bigshuffle)
     play_button.configure(image=bigplaybutton)
     pause_button.configure(image=bigpausebutton)
@@ -511,6 +536,13 @@ def set_theme():
         bg_color= "#2E383C"
         accent_color1= "#A7C080"
         font_color = "#D3C6AA"
+        bigshuffle=greenshufflebutton.zoom(3)
+        bigplaybutton = greenplaybutton.zoom(3)
+        bigpausebutton = greenpausebutton.zoom(3)
+        bigskip1button = greenskip1button.zoom(3)
+        bigskip2button = greenskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = "images/none7.png")
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -587,6 +619,15 @@ def set_companion():
             bigger_obj = obj.zoom(4)
             gifframes.append(bigger_obj)
         obj = tkinter.PhotoImage(file = "images/ghostnomusic.png")
+        bigger_obj = obj.zoom(4)
+        companion.configure(image = bigger_obj)
+    if companionvar=="owl":
+        gifframes= []
+        for i in range(frames):
+            obj = tkinter.PhotoImage(file = "images/owl.gif", format = f"gif -index {i}")
+            bigger_obj = obj.zoom(4)
+            gifframes.append(bigger_obj)
+        obj = tkinter.PhotoImage(file = "images/owl.png")
         bigger_obj = obj.zoom(4)
         companion.configure(image = bigger_obj)
     file = open("save.txt","w")

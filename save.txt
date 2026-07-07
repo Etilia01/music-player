@@ -1,1 +1,1 @@
-['#2E383C', '#D3C6AA', 44, '#A7C080', 'dracula', 'ghost']
+['#2E383C', '#D3C6AA', 44, '#A7C080', 'everforest', 'owl']
