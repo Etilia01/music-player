@@ -61,6 +61,20 @@ greenskip2button= PhotoImage(file="images/skip15.png")
 greenskip1button= PhotoImage(file="images/skip25.png")
 greenshufflebutton= PhotoImage(file="images/shuffle5.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
+none1= PhotoImage(file="images/none1.png")
+none1big= none1.zoom(4)
+none2= PhotoImage(file="images/none2.png")
+none2big= none2.zoom(4)
+none3= PhotoImage(file="images/none3.png")
+none3big= none3.zoom(4)
+none4= PhotoImage(file="images/none4.png")
+none4big= none4.zoom(4)
+none5= PhotoImage(file="images/none5.png")
+none5big= none5.zoom(4)
+none6= PhotoImage(file="images/none6.png")
+none6big= none6.zoom(4)
+none7= PhotoImage(file="images/none7.png")
+none7big= none7.zoom(4)
 bigger_obj = ghost.zoom(5)
 companionvar = "ghost"
 current_saved_volume = 30
@@ -206,7 +220,7 @@ def initstuff():
         bigskip1button = draskip1button.zoom(3)
         bigskip2button = draskip2button.zoom(3)
     if temptheme== "everforest":
-        bigshuffle=drashufflebutton.zoom(3)
+        bigshuffle=greenshufflebutton.zoom(3)
         bigplaybutton = greenplaybutton.zoom(3)
         bigpausebutton = greenpausebutton.zoom(3)
         bigskip1button = greenskip1button.zoom(3)
@@ -481,7 +495,7 @@ def set_theme():
         bigskip1button = skip1button.zoom(3)
         bigskip2button = skip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none1.png")
+            companion.configure(image = none1big)
     if temptheme== "hacker":
         bg_color= "black"
         accent_color1= "#a6d189"
@@ -492,13 +506,13 @@ def set_theme():
         bigskip1button = hackskip1button.zoom(3)
         bigskip2button = hackskip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none6.png")
+            companion.configure(image = none6big)
     if temptheme== "halloween":
         bg_color= "#FF7600"
         accent_color1= "#CD113B"
         font_color = "#52006A"
         if companionvar== "none":
-            companion.configure(image = "images/none5.png")
+            companion.configure(image = none5big)
     if temptheme== "dracula":
         bg_color= "#282A36"
         accent_color1= "#FF5555"
@@ -509,7 +523,7 @@ def set_theme():
         bigskip1button = draskip1button.zoom(3)
         bigskip2button = draskip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none2.png")
+            companion.configure(image = none2big)
     if temptheme== "rose pine":
         bg_color= "#191724"
         accent_color1= "#ebbcba"
@@ -520,7 +534,7 @@ def set_theme():
         bigskip1button = roseskip1button.zoom(3)
         bigskip2button = roseskip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none3.png")
+            companion.configure(image = none3big)
     if temptheme== "rose pine dawn":
         bg_color= "#faf4ed"
         accent_color1= "#d7827e"
@@ -531,7 +545,7 @@ def set_theme():
         bigskip1button = roseskip1button.zoom(3)
         bigskip2button = roseskip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none4.png")
+            companion.configure(image = none4big)
     if temptheme== "everforest":
         bg_color= "#2E383C"
         accent_color1= "#A7C080"
@@ -542,7 +556,7 @@ def set_theme():
         bigskip1button = greenskip1button.zoom(3)
         bigskip2button = greenskip2button.zoom(3)
         if companionvar== "none":
-            companion.configure(image = "images/none7.png")
+            companion.configure(image = none7big)
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -708,8 +722,21 @@ def animation(current_frame=0):
 
 
 def stop_animation():
+    global obj, bigger_obj
     if companionvar != "none":
         window.after_cancel(loop)
+        if companionvar=="owl":
+            obj = tkinter.PhotoImage(file = "images/owl.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+        if companionvar=="cat":
+            obj = tkinter.PhotoImage(file = "images/cat.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+        if companionvar=="ghost":
+            obj = tkinter.PhotoImage(file = "images/ghostnomusic.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
 
     
 
