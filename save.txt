@@ -1,1 +1,1 @@
-['#191724', '#e0def4', 44, '#ebbcba', 'rose pine', 'owl']
+['#282828', '#ebdbb2', 44, '#d65d0e', 'gruvbox', 'none']

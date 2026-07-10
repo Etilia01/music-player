@@ -60,6 +60,11 @@ greenpausebutton= PhotoImage(file="images/play5.png")
 greenskip2button= PhotoImage(file="images/skip15.png")
 greenskip1button= PhotoImage(file="images/skip25.png")
 greenshufflebutton= PhotoImage(file="images/shuffle5.png")
+boxplaybutton= PhotoImage(file="images/pause6.png")
+boxpausebutton= PhotoImage(file="images/play6.png")
+boxskip2button= PhotoImage(file="images/skip16.png")
+boxskip1button= PhotoImage(file="images/skip26.png")
+boxshufflebutton= PhotoImage(file="images/shuffle6.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
 none1= PhotoImage(file="images/none1.png")
 none1big= none1.zoom(4)
@@ -75,6 +80,8 @@ none6= PhotoImage(file="images/none6.png")
 none6big= none6.zoom(4)
 none7= PhotoImage(file="images/none7.png")
 none7big= none7.zoom(4)
+none8= PhotoImage(file="images/none8.png")
+none8big= none8.zoom(4)
 bigger_obj = ghost.zoom(5)
 companionvar = "ghost"
 current_saved_volume = 30
@@ -91,7 +98,7 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest"]
+themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest", "gruvbox"]
 selected_theme = StringVar(value="None")
 companions= ["none", "ghost", "cat", "owl"]
 selected_companion = StringVar(value="none")
@@ -200,6 +207,10 @@ def initstuff():
             obj = tkinter.PhotoImage(file = "images/none7.png")
             bigger_obj = obj.zoom(4)
             companion.configure(image=bigger_obj)
+        if temptheme== "gruvbox":
+            obj = tkinter.PhotoImage(file = "images/none8.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
         
     if temptheme=="hacker":
         bigshuffle=hackshufflebutton.zoom(3)
@@ -225,6 +236,12 @@ def initstuff():
         bigpausebutton = greenpausebutton.zoom(3)
         bigskip1button = greenskip1button.zoom(3)
         bigskip2button = greenskip2button.zoom(3)
+    if temptheme== "gruvbox":
+        bigshuffle=boxshufflebutton.zoom(3)
+        bigplaybutton = boxplaybutton.zoom(3)
+        bigpausebutton = boxpausebutton.zoom(3)
+        bigskip1button = boxskip1button.zoom(3)
+        bigskip2button = boxskip2button.zoom(3)
     shuffle_button.configure(image=bigshuffle)
     play_button.configure(image=bigplaybutton)
     pause_button.configure(image=bigpausebutton)
@@ -557,6 +574,17 @@ def set_theme():
         bigskip2button = greenskip2button.zoom(3)
         if companionvar== "none":
             companion.configure(image = none7big)
+    if temptheme== "gruvbox":
+        bg_color= "#282828"
+        accent_color1= "#d65d0e"
+        font_color = "#ebdbb2"
+        bigshuffle=boxshufflebutton.zoom(3)
+        bigplaybutton = boxplaybutton.zoom(3)
+        bigpausebutton = boxpausebutton.zoom(3)
+        bigskip1button = boxskip1button.zoom(3)
+        bigskip2button = boxskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = none8big)
     nowplaying.configure(activeforeground=accent_color1)
     small_button.configure(activeforeground=accent_color1)
     settings_button.configure(activeforeground=accent_color1)
@@ -615,6 +643,14 @@ def set_companion():
             companion.configure(image=bigger_obj)
         if temptheme== "hacker":
             obj = tkinter.PhotoImage(file = "images/none6.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "gruvbox":
+            obj = tkinter.PhotoImage(file = "images/none8.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "everforest":
+            obj = tkinter.PhotoImage(file = "images/none7.png")
             bigger_obj = obj.zoom(4)
             companion.configure(image=bigger_obj)
     if companionvar== "cat":
