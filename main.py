@@ -93,6 +93,7 @@ progress= 0 # to show position later if i have time to implement that
 fontcolorset= tkinter.StringVar()
 bgcolorset = tkinter.StringVar()
 accentcolorset = tkinter.StringVar()
+#accentcolor2set = tkinter.StringVar()
 queueueueueue = 0 #and the worst word in the english language goes tooooo.... whatever this bullshittery is. Only way to make queue acceptable to use is by adding progressively more ue to it. Trust.
 songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
@@ -439,6 +440,17 @@ def open_settings():
     pady=2,             
     command=updateaccentcolor)
     submit3.pack(pady=5)
+    #idk5 = tkinter.Label(settings_frame, text="Accentcolor 2 (Enter Hexcode)", font=("Arial", 12), fg=font_color, bg= bg_color)
+    #idk5.pack(pady=10)
+    #accentcolorentrytwo = tkinter.Entry(settings_frame, textvariable=accentcolor2set)
+    #accentcolorentrytwo.pack(pady=15)
+    #submit5 = tkinter.Button(
+    #settings_frame,
+    #text="Update Settings",   
+    #padx=0.5,         
+    #pady=2,             
+    #command=updateaccentcolor2)
+    #submit5.pack(pady=5)
     heading3= tkinter.Label(
         settings_frame, text="Listening Companion", font=("Arial", 18), fg=font_color, bg= bg_color
     )
@@ -497,6 +509,16 @@ def updateaccentcolor():
     file = open("save.txt","w")
     file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
     file.close()
+
+
+#def updateaccentcolor2():
+    #global accent_color2
+    #accent_color2 = accentcolor2set.get()
+    #print(accent_color2)
+    #companion.configure(background=accent_color2)
+    #file = open("save.txt","w")
+    #file.write(str([bg_color,font_color, current_saved_volume, accent_color1, temptheme, companionvar]))
+    #file.close()
 
 
 def set_theme():
