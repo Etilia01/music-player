@@ -65,6 +65,11 @@ boxpausebutton= PhotoImage(file="images/play6.png")
 boxskip2button= PhotoImage(file="images/skip16.png")
 boxskip1button= PhotoImage(file="images/skip26.png")
 boxshufflebutton= PhotoImage(file="images/shuffle6.png")
+latteplaybutton= PhotoImage(file="images/pause7.png")
+lattepausebutton= PhotoImage(file="images/play7.png")
+latteskip2button= PhotoImage(file="images/skip17.png")
+latteskip1button= PhotoImage(file="images/skip27.png")
+latteshufflebutton= PhotoImage(file="images/shuffle7.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
 none1= PhotoImage(file="images/none1.png")
 none1big= none1.zoom(4)
@@ -82,6 +87,8 @@ none7= PhotoImage(file="images/none7.png")
 none7big= none7.zoom(4)
 none8= PhotoImage(file="images/none8.png")
 none8big= none8.zoom(4)
+none9= PhotoImage(file="images/none9.png")
+none9big= none9.zoom(4)
 bigger_obj = ghost.zoom(5)
 companionvar = "ghost"
 current_saved_volume = 30
@@ -99,7 +106,7 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-themes= ["catppuccin mocha", "dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest", "gruvbox"]
+themes= ["catppuccin mocha","catppuccin latte","dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest", "gruvbox"]
 selected_theme = StringVar(value="None")
 companions= ["none", "ghost", "cat", "owl"]
 selected_companion = StringVar(value="none")
@@ -184,6 +191,12 @@ def initstuff():
             companion.configure(image = bigger_obj)
             companion.update_idletasks()
             print("updated")
+        if temptheme== "catppuccin latte":
+            obj = tkinter.PhotoImage(file = "images/none9.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
         if temptheme== "dracula":
             obj = tkinter.PhotoImage(file = "images/none2.png")
             bigger_obj = obj.zoom(4)
@@ -243,6 +256,18 @@ def initstuff():
         bigpausebutton = boxpausebutton.zoom(3)
         bigskip1button = boxskip1button.zoom(3)
         bigskip2button = boxskip2button.zoom(3)
+    if temptheme=="catppuccin":
+        bigshuffle=shufflebutton.zoom(3)
+        bigplaybutton = playbutton.zoom(3)
+        bigpausebutton = pausebutton.zoom(3)
+        bigskip1button = skip1button.zoom(3)
+        bigskip2button = skip2button.zoom(3)
+    if temptheme=="catppuccin latte":
+        bigshuffle=latteshufflebutton.zoom(3)
+        bigplaybutton = latteplaybutton.zoom(3)
+        bigpausebutton = lattepausebutton.zoom(3)
+        bigskip1button = latteskip1button.zoom(3)
+        bigskip2button = latteskip2button.zoom(3)
     shuffle_button.configure(image=bigshuffle)
     play_button.configure(image=bigplaybutton)
     pause_button.configure(image=bigpausebutton)
@@ -535,6 +560,17 @@ def set_theme():
         bigskip2button = skip2button.zoom(3)
         if companionvar== "none":
             companion.configure(image = none1big)
+    if temptheme== "catppuccin latte":
+        bg_color= "#eff1f5"
+        accent_color1= "#8839ef"
+        font_color = "#4c4f69"
+        bigshuffle=latteshufflebutton.zoom(3)
+        bigplaybutton = latteplaybutton.zoom(3)
+        bigpausebutton = lattepausebutton.zoom(3)
+        bigskip1button = latteskip1button.zoom(3)
+        bigskip2button = latteskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = none9big)
     if temptheme== "hacker":
         bg_color= "black"
         accent_color1= "#a6d189"
@@ -643,6 +679,12 @@ def set_companion():
     if companionvar == "none":
         if temptheme== "catppuccin mocha":
             obj = tkinter.PhotoImage(file = "images/none1.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
+        if temptheme== "catppuccin latte":
+            obj = tkinter.PhotoImage(file = "images/none9.png")
             bigger_obj = obj.zoom(4)
             companion.configure(image = bigger_obj)
             companion.update_idletasks()

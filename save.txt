@@ -1,1 +1,1 @@
-['#282828', '#ebdbb2', 44, '#d65d0e', 'gruvbox', 'none']
+['#eff1f5', '#4c4f69', 44, '#8839ef', 'catppuccin latte', 'owl']
