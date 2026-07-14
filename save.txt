@@ -1,1 +1,1 @@
-['#eff1f5', '#4c4f69', 44, '#8839ef', 'catppuccin latte', 'owl']
+['#181820', '#DCD7BA', 44, '#7AA89F', 'kanagawa wave', 'none']

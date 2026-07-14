@@ -70,6 +70,16 @@ lattepausebutton= PhotoImage(file="images/play7.png")
 latteskip2button= PhotoImage(file="images/skip17.png")
 latteskip1button= PhotoImage(file="images/skip27.png")
 latteshufflebutton= PhotoImage(file="images/shuffle7.png")
+waveplaybutton= PhotoImage(file="images/pause8.png")
+wavepausebutton= PhotoImage(file="images/play8.png")
+waveskip2button= PhotoImage(file="images/skip18.png")
+waveskip1button= PhotoImage(file="images/skip28.png")
+waveshufflebutton= PhotoImage(file="images/shuffle8.png")
+lotusplaybutton= PhotoImage(file="images/pause9.png")
+lotuspausebutton= PhotoImage(file="images/play9.png")
+lotusskip2button= PhotoImage(file="images/skip19.png")
+lotusskip1button= PhotoImage(file="images/skip29.png")
+lotusshufflebutton= PhotoImage(file="images/shuffle9.png")
 ghost= PhotoImage (file="images/ghostnomusic.png")
 none1= PhotoImage(file="images/none1.png")
 none1big= none1.zoom(4)
@@ -89,6 +99,10 @@ none8= PhotoImage(file="images/none8.png")
 none8big= none8.zoom(4)
 none9= PhotoImage(file="images/none9.png")
 none9big= none9.zoom(4)
+none10= PhotoImage(file="images/none10.png")
+none10big= none10.zoom(4)
+none11= PhotoImage(file="images/none11.png")
+none11big= none11.zoom(4)
 bigger_obj = ghost.zoom(5)
 companionvar = "ghost"
 current_saved_volume = 30
@@ -106,7 +120,7 @@ songs_in_queueueueuuuuuuuuu = [None] * 100
 add_song_here_in_queueuue_ueueu_euue = 0
 running= True
 songhasbeenplayed =False
-themes= ["catppuccin mocha","catppuccin latte","dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest", "gruvbox"]
+themes= ["catppuccin mocha","catppuccin latte","dracula", "hacker", "halloween", "rose pine", "rose pine dawn", "everforest", "gruvbox", "kanagawa wave", "kanagawa lotus"]
 selected_theme = StringVar(value="None")
 companions= ["none", "ghost", "cat", "owl"]
 selected_companion = StringVar(value="none")
@@ -197,6 +211,18 @@ def initstuff():
             companion.configure(image = bigger_obj)
             companion.update_idletasks()
             print("updated")
+        if temptheme== "kanagawa wave":
+            obj = tkinter.PhotoImage(file = "images/none10.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
+        if temptheme== "kanagawa lotus":
+            obj = tkinter.PhotoImage(file = "images/none11.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image = bigger_obj)
+            companion.update_idletasks()
+            print("updated")
         if temptheme== "dracula":
             obj = tkinter.PhotoImage(file = "images/none2.png")
             bigger_obj = obj.zoom(4)
@@ -268,6 +294,18 @@ def initstuff():
         bigpausebutton = lattepausebutton.zoom(3)
         bigskip1button = latteskip1button.zoom(3)
         bigskip2button = latteskip2button.zoom(3)
+    if temptheme=="kanagawa wave":
+        bigshuffle=waveshufflebutton.zoom(3)
+        bigplaybutton = waveplaybutton.zoom(3)
+        bigpausebutton = wavepausebutton.zoom(3)
+        bigskip1button = waveskip1button.zoom(3)
+        bigskip2button = waveskip2button.zoom(3)
+    if temptheme=="kanagawa lotus":
+        bigshuffle=lotusshufflebutton.zoom(3)
+        bigplaybutton = lotusplaybutton.zoom(3)
+        bigpausebutton = lotuspausebutton.zoom(3)
+        bigskip1button = lotusskip1button.zoom(3)
+        bigskip2button = lotusskip2button.zoom(3)
     shuffle_button.configure(image=bigshuffle)
     play_button.configure(image=bigplaybutton)
     pause_button.configure(image=bigpausebutton)
@@ -571,6 +609,28 @@ def set_theme():
         bigskip2button = latteskip2button.zoom(3)
         if companionvar== "none":
             companion.configure(image = none9big)
+    if temptheme== "kanagawa wave":
+        bg_color= "#181820"
+        accent_color1= "#7AA89F"
+        font_color = "#DCD7BA"
+        bigshuffle=waveshufflebutton.zoom(3)
+        bigplaybutton = waveplaybutton.zoom(3)
+        bigpausebutton = wavepausebutton.zoom(3)
+        bigskip1button = waveskip1button.zoom(3)
+        bigskip2button = waveskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = none10big)
+    if temptheme== "kanagawa lotus":
+        bg_color= "#f2ecbc"
+        accent_color1= "#4d699b"
+        font_color = "#545464"
+        bigshuffle=lotusshufflebutton.zoom(3)
+        bigplaybutton = lotusplaybutton.zoom(3)
+        bigpausebutton = lotuspausebutton.zoom(3)
+        bigskip1button = lotusskip1button.zoom(3)
+        bigskip2button = lotusskip2button.zoom(3)
+        if companionvar== "none":
+            companion.configure(image = none11big)
     if temptheme== "hacker":
         bg_color= "black"
         accent_color1= "#a6d189"
@@ -715,6 +775,14 @@ def set_companion():
             companion.configure(image=bigger_obj)
         if temptheme== "everforest":
             obj = tkinter.PhotoImage(file = "images/none7.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "kanagawa wave":
+            obj = tkinter.PhotoImage(file = "images/none10.png")
+            bigger_obj = obj.zoom(4)
+            companion.configure(image=bigger_obj)
+        if temptheme== "kanagawa lotus":
+            obj = tkinter.PhotoImage(file = "images/none11.png")
             bigger_obj = obj.zoom(4)
             companion.configure(image=bigger_obj)
     if companionvar== "cat":
