@@ -1067,4 +1067,7 @@ window.mainloop()
 
 #things ill need later for this/will implement once i get the buttons working/in there, compiled here so that i dont have to spend hours looking at docs every time i need to figure something like this out
 
-#pygame.mixer.fadeout(time) oooh, fancy stopping! ill make this an optional thingy with a little settings checkbox. maybe also to switch between songs once theyre in the last few seconds...?
+#fadeout is not possible without figuring out how to detect when the song is almost done, so it wont be implemented any time soon/old comment: pygame.mixer.fadeout(time) oooh, fancy stopping! ill make this an optional thingy with a little settings checkbox. maybe also to switch between songs once theyre in the last few seconds...?
+
+
+#do i have enough themes now? No, but I wanna start a new project now
