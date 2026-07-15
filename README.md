@@ -7,7 +7,8 @@ It only plays mp3s btw
 <p>-Auto-queue: Once youve already loaded a song any others you select are automatically added to your queue</p>
 <p>-Customizability: You can change font color, background color and one accent color using hexcodes.</p>
 <p>-Random Shuffle</p>
-<p>-Cute ghost in the corner: Its just there.</p>
+<p>-Cute ghost as the song cover: its just there</p>
+(you can also have some other listening companions but the ghost is my favorite one)
 
 <h1>Install Instructions:</h1>
 <p>1. Download and extract Music Player.tar.gz from releases</p>
