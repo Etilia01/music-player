@@ -5,7 +5,7 @@ It only plays mp3s btw
 
 <p>Some Features:</p>
 <p>-Auto-queue: Once youve already loaded a song any others you select are automatically added to your queue</p>
-<p>-Customizability: You can change font color, background color and one accent color using hexcodes.</p>
+<p>-Customizability: You can change font color, background color and one accent color using hexcodes. Theres also some preset themes.</p>
 <p>-Random Shuffle</p>
 <p>-Cute ghost as the song cover: its just there</p>
 (you can also have some other listening companions but the ghost is my favorite one)
