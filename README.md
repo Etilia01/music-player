@@ -22,3 +22,5 @@ It only plays mp3s btw
 <p>However this button might be confusing:</p> <img width="58" height="58" alt="2026-07-03-142930_hyprshot" src="https://github.com/user-attachments/assets/58a328c8-2a79-4f85-bd1c-2305ccf8e20d" />
 
 This is the shuffle button, which randomizes your queue.
+
+Also "Listening companion" (you can find it in settings) is just a small picture/animation thats where an album cover would usually be. If you select none it will be a music note fitting the colorscheme of the current selected theme preset, any other (ghost, owl, cat) are self-explanatory.
